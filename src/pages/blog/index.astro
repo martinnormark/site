@@ -5,12 +5,24 @@ import Layout from "../../layouts/Layout.astro";
 const allPosts = await getCollection("blog");
 ---
 
-<Layout title="Welcome to Astro.">
-  <main>
-    {
-      allPosts.map((post: any) => (
-        <a href={"/blog/" + post.slug}>{post.data.title}</a>
-      ))
-    }
+<Layout title="Blog posts">
+  <main class="container mx-auto px-4 py-8 max-w-3xl prose">
+    <h1>Blog posts</h1>
+    <ul class="list-none p-0">
+      {
+        allPosts.map((post: any) => (
+          <li class="grid grid-cols-2 gap-4">
+            <a href={"/blog/" + post.slug}>{post.data.title}</a>
+            <time datetime={post.data.date.toISOString()}>
+              {post.data.date.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </li>
+        ))
+      }
+    </ul>
   </main>
 </Layout>
