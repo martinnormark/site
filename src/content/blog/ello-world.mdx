@@ -1,28 +1,37 @@
 ---
 title: "ello world"
-date: 2024-02-02
-excerpt: A full, step-by-step guide for developers seeking to implement a portfolio or blog publication with Astro.
+date: 2024-11-16
+excerpt: Lift off! Embarking on a journey with Astro! 👨‍🚀
 tags: [astro]
 ---
 
-Hey! My first blog post is here.
+Hey! First post is here, published using [Astro](https://astro.build/).
 
-### With title, line numbers, and character highlighting
+I will use this site as a devlog on my journey getting deeper into AI/ML.
 
-```elixir title="fib.ex" showLineNumbers
-defmodule Solution do
-  @spec is_palindrome(x :: integer) :: boolean
-  def is_palindrome(x) when x < 0, do: false
-  def is_palindrome(x), do: do_is_palindrome(x, get_base_10(x, 1))
+My first interaction with machine learning was [`sklearn`](https://scikit-learn.org/stable/), which still has a fantastic and well designed API. I used it primarily for classification on tabular data. Think of a large spreadsheet with many columns, and you need to predict a column value based on the rest.
 
-  defp do_is_palindrome(x, b10) when b10 > 1,
-    do: get_first_digit(x, b10) == rem(x, 10) and do_is_palindrome(div(x, 10), div(b10, 100))
+I opened the door to NLP in around 2017, when I discovered [Word2vec](https://en.wikipedia.org/wiki/Word2vec). Never managed to get off the ground until I discovered [SpaCy](https://spacy.io/) where I managed to create some meaningful classification and named entity recognition. Still requried lots of labelling!
 
-  defp do_is_palindrome(_, _), do: true
+Then came BERT and Hugging Face 🤗 was only a [neural coreference system](https://huggingface.co/coref/), but soon released [Write with Transformers](https://banana-projects-transformer-autocomplete.hf.space/) and the rest is history!
 
-  defp get_first_digit(n, b10), do: div(n, b10) |> rem(10)
+Computer Vision was often more effective on some tasks. For example classification of a dense document as being a certain type of form ([airworthiness approval forms](https://ecommerce.aviationeu.supplies/en/content/8-faaeasa-airworthiness-approval-forms-for-productsparts)) was more efficient with better accuracy as an image classification problem using AWS Rekognition at the time.
 
-  defp get_base_10(n, b10) when n >= b10, do: get_base_10(n, b10 * 10)
-  defp get_base_10(n, b10), do: div(b10, 10)
-end
-```
+Applied similar technique to find page orientation problems in scanned documents:
+
+<blockquote class="twitter-tweet">
+  <a href="https://twitter.com/MartinHN/status/1440762582910963712"></a>
+</blockquote>
+
+Object detection was also useful with document images:
+
+<blockquote class="twitter-tweet">
+  <a href="https://twitter.com/MartinHN/status/976928114575134720"></a>
+</blockquote>
+<script
+  async
+  src="https://platform.twitter.com/widgets.js"
+  charset="utf-8"
+></script>
+
+Today, large language models and moreso, Vision Language Models (VLMs) can doo all of this with few-shot prompting (if not zero-shot). For efficiency, use it to label examples and distil a smaller model, optimize it with quantization and ONNX runtime and you have a beast!
