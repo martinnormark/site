@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Terminal } from "lucide-astro";
+const title = "DevBlog - Not Found";
+---
+
+<Layout title={title}>
+  <div
+    class="flex flex-col items-center justify-center flex-grow bg-white text-gray-800 p-4"
+  >
+    <Terminal class="w-16 h-16 mb-4 text-blue-600" />
+    <h1 class="text-4xl font-mono mb-2 text-blue-600">404 Not Found</h1>
+    <p class="text-xl font-mono mb-4">
+      Oops! Page not found in this dimension.
+    </p>
+    <pre
+      class="bg-gray-100 p-4 rounded-md text-sm mb-6 overflow-x-auto max-w-full">
+          <code class="text-gray-700">{`
+  $ grep -R "page" /var/www/
+  grep: /var/www/: No such file or directory
+          `}</code>
+        </pre>
+    <a
+      href="/"
+      class="font-mono text-white bg-blue-600 px-4 py-2 rounded hover:bg-blue-700 transition-colors"
+    >
+      Return to Home
+    </a>
+  </div>
+</Layout>
