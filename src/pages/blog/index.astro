@@ -3,6 +3,10 @@ import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
 const allPosts = await getCollection("blog");
+// Sort posts by date in descending order (most recent first)
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
 ---
 
 <Layout title="Blog posts">
@@ -10,7 +14,7 @@ const allPosts = await getCollection("blog");
     <h1>Blog posts</h1>
     <ul class="list-none p-0">
       {
-        allPosts.map((post: any) => (
+        sortedPosts.map((post: any) => (
           <li class="grid grid-cols-2 gap-4">
             <a href={"/blog/" + post.slug}>{post.data.title}</a>
             <time datetime={post.data.date.toISOString()}>
