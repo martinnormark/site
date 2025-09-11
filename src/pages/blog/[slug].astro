@@ -82,7 +82,9 @@ const { Content } = await post.render();
       <div class="mb-2">
         {
           post.data.tags.map((tag) => (
-            <span class="text-xs bg-gray-200 rounded-md px-2 py-1">{tag}</span>
+            <span class="text-xs bg-gray-200 rounded-md px-2 py-1 mr-2">
+              {tag}
+            </span>
           ))
         }
       </div>
