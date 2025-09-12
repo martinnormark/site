@@ -15,8 +15,29 @@ const sortedPosts = allPosts.sort(
     <ul class="list-none p-0">
       {
         sortedPosts.map((post: any) => (
-          <li class="grid grid-cols-2 gap-4">
-            <a href={"/blog/" + post.slug}>{post.data.title}</a>
+          <li class="grid grid-cols-2 gap-4 items-baseline">
+            <div class="flex items-center gap-2">
+              <a href={"/blog/" + post.slug}>{post.data.title}</a>
+              {post.data.type === "link" && (
+                <>
+                  <span class="text-xs bg-blue-100 text-blue-800 rounded-md px-2 py-0.5">
+                    Link
+                  </span>
+                  {post.data.externalUrl && (
+                    <a
+                      href={post.data.externalUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="Open original article"
+                      class="text-gray-500 hover:text-gray-800"
+                      title="Open original article"
+                    >
+                      ↗
+                    </a>
+                  )}
+                </>
+              )}
+            </div>
             <time datetime={post.data.date.toISOString()}>
               {post.data.date.toLocaleDateString("en-US", {
                 year: "numeric",

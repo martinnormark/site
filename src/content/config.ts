@@ -6,14 +6,26 @@ const postsCollection = defineCollection({
     // using zod to define type-safe frontmatter of our mdx files
     // astro will generate types definitions for our project so we can use them in templates
     // also it will check every newly created frontmatter in the content/blog directory
-    z.object({
-      author: z.string().default("Martin Høst Normark"),
-      title: z.string(),
-      tags: z.array(z.string()),
-      cover: image().optional(),
-      date: z.coerce.date(),
-      excerpt: z.string(),
-    }),
+    z
+      .object({
+        author: z.string().default("Martin Høst Normark"),
+        title: z.string(),
+        tags: z.array(z.string()),
+        cover: image().optional(),
+        date: z.coerce.date(),
+        excerpt: z.string(),
+        type: z.enum(["post", "link"]).default("post"),
+        externalUrl: z.string().url().optional(),
+      })
+      .superRefine((data, ctx) => {
+        if (data.type === "link" && !data.externalUrl) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: "externalUrl is required when type is 'link'",
+            path: ["externalUrl"],
+          });
+        }
+      }),
 });
 
 // This key should match your collection directory name in "src/content"

@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
-import { ArrowLeft } from "lucide-astro";
+import { ArrowLeft, ExternalLink } from "lucide-astro";
 import type { CollectionEntry } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
 
@@ -89,8 +89,31 @@ const { Content } = await post.render();
         }
       </div>
       <p class="lead">{post.data.excerpt}</p>
-      <hr class="border-neutral-200 -mx-4 my-12" />
+      <hr class="border-neutral-200 -mx-4 my-6" />
       <div>
+        {
+          post.data.type === "link" && (
+            <div class="not-prose mt-2 mb-4 flex flex-wrap items-center gap-3">
+              <span class="text-xs bg-blue-100 text-blue-800 rounded-md px-2 py-1">
+                Link post
+              </span>
+              {post.data.externalUrl && (
+                <a
+                  href={post.data.externalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="inline-flex items-center gap-2 rounded-md bg-blue-600 text-white px-3 py-1.5 text-sm hover:bg-blue-700 transition-colors"
+                >
+                  <ExternalLink class="h-4 w-4" /> Read the original
+                </a>
+              )}
+            </div>
+            <p class="m-0 italic text-gray-700">
+              This is a link post with my commentary. The original article is
+              hosted elsewhere.
+            </p>
+          )
+        }
         <Content />
       </div>
     </article>
