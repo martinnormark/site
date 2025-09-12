@@ -1,0 +1,13 @@
+---
+description: How to run this project
+globs:
+alwaysApply: true
+---
+
+This is a minimalist site with a blog collection.
+
+It is based on Astro without much customization, and posts are written in MDX.
+
+When writing posts or changing templates, layouts etc. use the Playwright MCP server to see what the changes look like.
+
+Run the `npm run dev` command to start the dev server which is hosted at http://localhost:4321
