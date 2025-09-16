@@ -1,6 +1,5 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import cloudflare from "@astrojs/cloudflare";
 import tailwind from "@astrojs/tailwind";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
@@ -10,13 +9,9 @@ import rehypeSlug from "rehype-slug";
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.martinnormark.com",
-  output: "server",
+  output: "static",
 
-  adapter: cloudflare({
-    platformProxy: {
-      enabled: true,
-    },
-  }),
+  // Removed Cloudflare adapter to generate a static site for Pages
 
   integrations: [
     react(),
