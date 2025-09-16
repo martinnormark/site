@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+import { Github, Twitter, Linkedin } from "lucide-astro";
 ---
 
 <Layout title="Home of Martin Høst Normark">
@@ -11,44 +13,36 @@ import Layout from "../layouts/Layout.astro";
         class="w-48 h-48 rounded-full mx-auto mb-6"
       />
       <h1 class="text-4xl font-bold mb-4">Martin Høst Normark</h1>
-      <p class="text-xl text-gray-600 mb-6">
-        Engineering the Uncertain: My Probabilistic Path
-      </p>
-      <!-- <div class="flex justify-center space-x-4">
+      <p class="text-xl text-gray-600 mb-6">Engineering the Uncertain</p>
+      <div class="flex justify-center space-x-4">
         <Button variant="outline" size="icon" asChild>
-          <Link href="https://github.com">
+          <a href="https://github.com/martinnormark">
             <Github class="h-5 w-5" />
             <span class="sr-only">GitHub</span>
-          </Link>
+          </a>
         </Button>
         <Button variant="outline" size="icon" asChild>
-          <Link href="https://twitter.com">
+          <a href="https://twitter.com/martinhn">
             <Twitter class="h-5 w-5" />
             <span class="sr-only">Twitter</span>
-          </Link>
+          </a>
         </Button>
         <Button variant="outline" size="icon" asChild>
-          <Link href="https://linkedin.com">
+          <a href="https://linkedin.com/in/martinhn">
             <Linkedin class="h-5 w-5" />
             <span class="sr-only">LinkedIn</span>
-          </Link>
+          </a>
         </Button>
-        <Button variant="outline" size="icon" asChild>
-          <Link href="mailto:jane@example.com">
-            <Mail class="h-5 w-5" />
-            <span class="sr-only">Email</span>
-          </Link>
-        </Button>
-      </div> -->
+      </div>
     </div>
 
     <div class="prose max-w-none">
       <section>
         <h2 class="text-2xl font-semibold mb-4">About Me</h2>
         <p class="text-gray-600 mb-4">
-          Hi there! I’m Martin, a software engineer (aspiring ML engineer and
-          data scientist) with a probabilistic mindset, crafting tools that
-          balance uncertainty with precision. My journey spans building scalable
+          Hi there! I’m Martin, generalist software engineer (aspiring ML
+          engineer and data scientist) currently working at The LEGO Group as
+          Principal Software Engineer. My journey spans building scalable
           systems, leveraging machine learning, and designing data-driven tools
           that empower teams and redefine possibilities. Explore how I bring
           statistical rigor and creative engineering to solve complex problems
