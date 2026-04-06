@@ -1,5 +1,5 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
 import { ArrowLeft, ArrowUpRight } from "lucide-astro";
 import type { CollectionEntry } from "astro:content";
@@ -18,15 +18,10 @@ export async function getStaticPaths() {
     throw new Error("No blog posts found");
   }
 
-  return blogPosts.map((post: any) => {
-    if (!post?.slug) {
-      throw new Error(`Blog post missing slug: ${JSON.stringify(post)}`);
-    }
-    return {
-      params: { slug: post.slug },
-      props: { post },
-    };
-  });
+  return blogPosts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
@@ -35,7 +30,7 @@ if (!post) {
   throw new Error(`Post not found for current route`);
 }
 
-const { Content } = await post.render();
+const { Content } = await render(post);
 ---
 
 <Layout title={`${post.data.title} - Martin Høst Normark`}>

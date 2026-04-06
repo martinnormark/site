@@ -21,7 +21,7 @@ const sortedPosts = allPosts.sort(
         sortedPosts.map((post, i) => (
           <li class={`animate-fade-in-up delay-${Math.min(i + 1, 5)}`}>
             <a
-              href={"/blog/" + post.slug}
+              href={"/blog/" + post.id}
               class="group flex items-baseline justify-between gap-4 py-3 border-b border-border/30 hover:border-primary/30 transition-colors duration-300"
             >
               <div class="flex items-center gap-3 min-w-0">

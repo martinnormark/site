@@ -1,11 +1,9 @@
 import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
-const postsCollection = defineCollection({
-  type: "content",
+const blog = defineCollection({
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/blog" }),
   schema: ({ image }) =>
-    // using zod to define type-safe frontmatter of our mdx files
-    // astro will generate types definitions for our project so we can use them in templates
-    // also it will check every newly created frontmatter in the content/blog directory
     z
       .object({
         author: z.string().default("Martin Høst Normark"),
@@ -28,7 +26,4 @@ const postsCollection = defineCollection({
       }),
 });
 
-// This key should match your collection directory name in "src/content"
-export const collections = {
-  blog: postsCollection,
-};
+export const collections = { blog };
