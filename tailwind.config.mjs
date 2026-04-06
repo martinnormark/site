@@ -6,7 +6,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['"Satoshi"', '"Inter"', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['"JetBrains Mono"', '"Fira Code"', 'ui-monospace', 'monospace'],
+        mono: ['"Geist Mono"', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -52,6 +52,9 @@ export default {
         DEFAULT: {
           css: {
             maxWidth: '65ch',
+            'code, pre, kbd, samp': {
+              fontFamily: '"Geist Mono", ui-monospace, monospace',
+            },
           },
         },
       },
