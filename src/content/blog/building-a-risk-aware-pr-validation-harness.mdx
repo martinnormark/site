@@ -1,0 +1,381 @@
+---
+title: "Building a Risk-Aware PR Validation Harness for AI-Authored Code"
+date: 2026-04-06
+excerpt: "When AI agents write code, PR volume explodes but manual review doesn't scale. Here's how to build a system that classifies PRs by risk, captures browser evidence, and reports merge readiness — with real code, config, and hard-won lessons from CI."
+tags: [ci-cd, ai-agents, developer-tooling, github-actions]
+---
+
+The moment your AI coding agents start shipping real features, you discover an uncomfortable truth: your CI pipeline was designed for human-paced development. Three PRs a day from a team of five is manageable; thirty from a fleet of Claude Code and Codex sessions is not. The bottleneck isn't the agents -- it's you, applying the same scrutiny to a CSS padding fix as to an auth middleware rewrite.
+
+The fix isn't more reviewers. It's a system that understands risk. I've been building what I call a risk-aware PR validation harness, and this post walks through the architecture, the code, and the hard-won lessons from getting it running in CI.
+
+## The classifier drives everything downstream
+
+The whole system runs as a single GitHub Actions workflow with five jobs. The classifier's output controls which jobs run and what the merge-readiness comment reports.
+
+```
+PR opened/synchronized
+        │
+        ▼
+┌───────────────────┐
+│ Risk Classifier   │──▶ Reads changed files, matches against config
+└────────┬──────────┘
+         │ tier, segments, required checks
+         ▼
+┌─────────────────┐     ┌─────────────────┐
+│  Apply Label    │     │ Build + Types   │
+│  risk:<tier>    │     │ + Unit Tests    │
+└─────────────────┘     └────────┬────────┘
+                                 │
+         ┌───────────────────────┘
+         ▼                       ▼
+┌──────────────────┐     ┌─────────────────┐
+│ Browser Evidence │     │ Merge Readiness │
+│ (conditional)    │     │ Comment         │
+└────────┬─────────┘     └─────────────────┘
+         │ screenshots, video, HAR
+         ▼
+┌──────────────────┐
+│ Upload to R2     │──▶ Presigned URLs in manifest
+└──────────────────┘
+```
+
+Classify, label, build, capture evidence, report readiness. The classifier decides what level of scrutiny a PR gets; everything else follows from that decision.
+
+## Segments map to user impact, not package structure
+
+Before writing any code, you map your application into segments -- modules as your end user experiences them, not as your codebase organizes them. A change to `auth-client.ts` in the web app and `auth.ts` in the server both affect the "auth" segment. Risk should map to user impact, not internal package boundaries.
+
+A single JSON config is the source of truth:
+
+```jsonc
+// harness/risk-tiers.json
+{
+  "segments": {
+    "auth": {
+      "name": "Auth",
+      "paths": [
+        "apps/web/src/app/(auth)/**",
+        "apps/web/src/lib/auth-client.ts",
+        "apps/server/src/auth/**",
+      ],
+      "routes": ["/login", "/signup"],
+      "riskTier": "high",
+    },
+    "dashboard": {
+      "name": "Dashboard",
+      "paths": ["apps/web/src/app/dashboard/**"],
+      "routes": ["/dashboard"],
+      "riskTier": "medium",
+    },
+    "database": {
+      "name": "Database Schema",
+      "paths": ["packages/database/src/schema/**"],
+      "routes": [],
+      "riskTier": "high",
+    },
+  },
+  "overrides": [
+    {
+      "pattern": "packages/database/src/schema/*.ts",
+      "tier": "high",
+      "reason": "Schema changes affect data integrity",
+    },
+    {
+      "pattern": ".github/workflows/**",
+      "tier": "high",
+      "reason": "CI changes affect all PRs",
+    },
+  ],
+  "defaults": {
+    "tier": "low",
+    "segment": "unclassified",
+  },
+  "mergePolicy": {
+    "high": { "requiredChecks": ["build", "browser-evidence", "human-review"] },
+    "medium": { "requiredChecks": ["build"] },
+    "low": { "requiredChecks": ["build"] },
+  },
+}
+```
+
+Three design decisions are worth naming explicitly. First, the `routes` field gates browser evidence -- if a segment has no routes, the harness skips the browser launch and falls back to type-checks and unit tests. Second, overrides exist for cross-cutting concerns: schema files are always high-risk regardless of which segment they fall under. Third, when a PR spans multiple segments, the highest tier wins -- one high-risk file triggers full checks, because under-validating an auth change is far more expensive than over-validating a typo.
+
+This config is declarative, auditable, and diffable. When an agent adds a new feature, it can add the segment config in the same PR.
+
+## The classifier emits a contract
+
+The classifier reads the git diff, matches changed files against the config, and emits a JSON contract that drives everything downstream:
+
+```typescript
+import { minimatch } from "minimatch";
+
+interface ClassifierOutput {
+  tier: "high" | "medium" | "low";
+  segments: Array<{ name: string; tier: string; files: string[] }>;
+  needsBrowserEvidence: boolean;
+  requiredChecks: string[];
+}
+
+function classify(
+  changedFiles: string[],
+  config: RiskTiersConfig,
+): ClassifierOutput {
+  const matched = new Map<string, { tier: string; files: string[] }>();
+
+  function addToSegment(segName: string, tier: string, file: string) {
+    const existing = matched.get(segName) ?? { tier, files: [] };
+    existing.tier = highestTier([existing.tier, tier]);
+    existing.files.push(file);
+    matched.set(segName, existing);
+  }
+
+  for (const file of changedFiles) {
+    // Check overrides first (highest precedence)
+    let classified = false;
+    for (const override of config.overrides) {
+      if (minimatch(file, override.pattern)) {
+        addToSegment("infra", override.tier, file);
+        classified = true;
+        break;
+      }
+    }
+
+    if (!classified) {
+      for (const [segName, seg] of Object.entries(config.segments)) {
+        if (seg.paths.some((p) => minimatch(file, p))) {
+          addToSegment(segName, seg.riskTier, file);
+          classified = true;
+          break;
+        }
+      }
+    }
+
+    // Falls through to defaults.segment / defaults.tier if unclassified
+    if (!classified) {
+      addToSegment(config.defaults.segment, config.defaults.tier, file);
+    }
+  }
+
+  const segments = [...matched.entries()].map(([name, { tier, files }]) => ({
+    name,
+    tier,
+    files,
+  }));
+  const tier = highestTier(segments.map((s) => s.tier));
+
+  const needsBrowserEvidence = segments.some(
+    (s) => config.segments[s.name]?.routes?.length > 0,
+  );
+
+  const requiredChecks = config.mergePolicy[tier].requiredChecks.filter(
+    (c) => c !== "browser-evidence" || needsBrowserEvidence,
+  );
+
+  return { tier, segments, needsBrowserEvidence, requiredChecks };
+}
+```
+
+It supports two modes: CI mode (`--base origin/main`) uses `git diff origin/main...HEAD` for committed changes, and local mode (no flags) uses staged + unstaged + untracked files so developers can check their risk tier before pushing.
+
+## Browser evidence, not just pass/fail
+
+For high-risk PRs touching user-facing routes, the harness launches a headless browser and captures real evidence. I'm using [agent-browser](https://github.com/vercel-labs/agent-browser), a Rust-based CLI from Vercel Labs that speaks Chrome DevTools Protocol. Each command is a single `npx agent-browser <command>` invocation -- no Playwright boilerplate, no page object models, no test runner framework.
+
+Each browser-testable segment gets its own test file. Tests are plain scripts; the exit code is the result:
+
+```typescript
+// harness/browser-tests/auth.ts
+async function main() {
+  await startRecording(`${evidenceDir}/recording.webm`);
+  await run(["network", "har", "start"]);
+
+  try {
+    await run(["open", `${webUrl}/login`]);
+    await run(["wait", "--load", "networkidle"]);
+    await run(["screenshot", `${evidenceDir}/login-form.png`]);
+
+    // Verify form fields exist via accessibility snapshot
+    const snapshot = await run(["snapshot", "-i"]);
+    assert(
+      snapshot.toLowerCase().includes("email"),
+      "Email field should be visible",
+    );
+
+    // Sign in and verify redirect
+    await run(["fill", "#email", email]);
+    await run(["fill", "#password", password]);
+    await run(["click", "button[type=submit]"]);
+    await run(["wait", "8000"]);
+
+    const url = (await run(["get", "url"])).trim();
+    assert(
+      !url.includes("/login"),
+      `Should redirect after sign-in, got: ${url}`,
+    );
+    await run(["screenshot", `${evidenceDir}/post-login-redirect.png`]);
+  } finally {
+    await stopRecording();
+    await run(["network", "har", "stop", `${evidenceDir}/network.har`]);
+    await cleanup();
+  }
+}
+```
+
+After a test run, the evidence directory looks like this:
+
+```
+harness/evidence/auth/
+  login-form.png
+  post-login-redirect.png
+  recording.webm
+  network.har
+```
+
+This isn't pass/fail. It's machine-verifiable proof: screenshots of what the user would see, video of the full interaction, and HAR files capturing every network request.
+
+Evidence gets uploaded to Cloudflare R2 (any S3-compatible storage works) with presigned URLs, and the upload script enriches the manifest in-place so downstream scripts don't need storage credentials:
+
+```typescript
+const keyPrefix = `evidence/pr-${pr}/${timestamp}`;
+
+for (const screenshot of seg.screenshots) {
+  const key = `${keyPrefix}/${seg.name}/${screenshot.step}.png`;
+  await s3.send(
+    new PutObjectCommand({ Bucket, Key: key, Body, ContentType: "image/png" }),
+  );
+  screenshot.url = await getSignedUrl(
+    s3,
+    new GetObjectCommand({ Bucket, Key: key }),
+    {
+      expiresIn: 7 * 24 * 60 * 60, // 7 days
+    },
+  );
+}
+```
+
+Why object storage instead of GitHub artifacts? Presigned URLs can be embedded directly in PR comments as images and links -- no artifact download dance. Set a bucket expiry rule (90 days) and evidence auto-deletes.
+
+## The sharp edges
+
+Three lessons cost us real debugging time before the harness ran reliably in CI.
+
+**Video encoding is asynchronous.** `agent-browser record stop` signals Chrome's screencast to halt, but ffmpeg needs time to finalize the WebM container. Call `close` too early and you get zero-byte files. Our first implementation also caught and silenced all recording errors, which hid the root cause (missing ffmpeg) for multiple CI runs. Every browser automation helper should surface errors and verify the output file exists:
+
+```typescript
+export async function stopRecording(): Promise<boolean> {
+  if (!recordingPath) return false;
+  try {
+    const proc = Bun.spawn(["bunx", "agent-browser", "record", "stop"], {
+      stdout: "pipe",
+      stderr: "pipe",
+    });
+    await proc.exited;
+
+    // Poll for the file — encoder needs time to finalize
+    const deadline = Date.now() + 10_000;
+    let exists = false;
+    while (Date.now() < deadline) {
+      if (await Bun.file(recordingPath).exists()) {
+        exists = true;
+        break;
+      }
+      await Bun.sleep(250);
+    }
+
+    if (!exists)
+      console.warn(`WARNING: Recording file not found: ${recordingPath}`);
+    return exists;
+  } catch (err) {
+    console.warn(`WARNING: record stop failed: ${(err as Error).message}`);
+    return false;
+  }
+}
+```
+
+Polling at 250ms with a 10-second deadline is ugly but reliable.
+
+**Seed through your auth layer, not the database.** Direct DB inserts bypass validation, skip org setup, and create records your auth library won't recognize. In practice, this meant auth tokens that looked valid but returned silent 401s on every protected route -- ghost records that broke the moment real middleware touched them. The kind of failure that looks like a flaky test until you trace it to a user object no sign-up flow ever created. The fix: use your actual sign-up endpoints:
+
+```typescript
+async function seedTestUser() {
+  const signUpRes = await fetch(`${serverUrl}/api/auth/sign-up/email`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Origin: origin },
+    body: JSON.stringify({ name: "Harness Test", email, password }),
+  });
+
+  // If user exists, sign in instead
+  if (signUpRes.status === 422) {
+    const signInRes = await fetch(`${serverUrl}/api/auth/sign-in/email`, { ... });
+    sessionCookie = extractSessionCookie(signInRes);
+  }
+
+  // Create org (authenticated)
+  await fetch(`${serverUrl}/api/auth/organization/create`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Cookie: sessionCookie, Origin: origin },
+    body: JSON.stringify({ name: "Harness Test Org", slug: "harness-test" }),
+  });
+}
+```
+
+Every test user becomes indistinguishable from a real one, the script validates your auth flow as a side effect, and making it idempotent means it runs safely each time.
+
+**Use one workflow, not many.** Our first implementation used three separate workflows triggered on the same PR event; labels, comments, and status checks fell into race conditions within minutes. One workflow with job-level `if` conditions and `needs` dependencies is simpler to reason about and debug.
+
+## The CI workflow
+
+The whole thing runs as one workflow with five jobs: classify, label, build-and-type-check, browser-evidence, merge-readiness. The classifier outputs drive conditional execution -- `browser-evidence` only runs when `needsBrowserEvidence` is true, and `merge-readiness` runs with `if: always()` so it reports even when upstream jobs fail.
+
+One thing that will bite you: agent-browser's video recording depends on ffmpeg and a full set of Chrome runtime dependencies that aren't on the GitHub Actions Ubuntu image. Two CI runs produced no video output and no error before we identified the missing libraries. Here's the install step:
+
+```yaml
+- name: Install Chrome runtime dependencies
+  run: |
+    sudo apt-get update
+    sudo apt-get install -y \
+      ffmpeg \
+      ca-certificates fonts-liberation libasound2t64 \
+      libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 \
+      libcairo2 libcups2 libdbus-1-3 libgbm1 libglib2.0-0 \
+      libgtk-3-0t64 libnspr4 libnss3 libpango-1.0-0 \
+      libvulkan1 libx11-6 libxcb1 libxcomposite1 \
+      libxdamage1 libxext6 libxfixes3 libxkbcommon0 \
+      libxrandr2 wget xdg-utils
+
+- name: Install agent-browser Chrome
+  run: npx agent-browser install --with-deps
+```
+
+## The merge-readiness comment
+
+The final job posts a PR comment summarizing what passed, what failed, and where to find evidence. The comment uses an HTML marker (`<!-- harness-merge-readiness -->`) so it can be found and updated on subsequent pushes rather than creating duplicate comments:
+
+```markdown
+## Merge Readiness — Risk: low
+
+| Check              | Status    |
+| ------------------ | --------- |
+| Build & Type Check | ✅ Passed |
+| Browser Evidence   | ✅ Passed |
+
+### Evidence: auth
+
+| Step                | Screenshot                                               |
+| ------------------- | -------------------------------------------------------- |
+| login-form          | ![login-form](https://r2.../login-form.png?...)          |
+| post-login-redirect | ![post-login](https://r2.../post-login-redirect.png?...) |
+
+[View recording](https://r2.../recording.webm?...)
+```
+
+Screenshots embedded directly in the PR. Video one click away. No artifact download, no separate tab, no friction.
+
+## What this changes
+
+What changes is structural, not cosmetic. Agents ship low-risk changes without browser evidence or human approval. Humans focus where it matters -- PRs with `risk:high` labels and full evidence trails. Every PR becomes auditable with timestamped artifacts that auto-expire -- six months from now, you can pull up any merged PR and see exactly what the login page looked like when the auth change shipped, frame by frame.
+
+Adding a new segment is a JSON config change. Adding a new browser test is a single script file. The classifier, capture orchestrator, and merge-readiness reporter adapt automatically. When agents produce more PRs than your team does, that leverage isn't optional -- it's infrastructure.
+
+> **Related reading:** Ryan Carson describes the same loop in his [Code Factory](https://x.com/ryancarson/status/2023452909883609111) thread -- agent writes code, repo enforces risk-aware checks, review agent validates the PR, evidence is machine-verifiable, findings feed back into the harness. The pattern is converging across teams. For the original inspiration, see Ryan Lopopolo's [Harness engineering: leveraging Codex in an agent-first world](https://openai.com/index/harness-engineering/) -- 3 engineers, ~1,500 merged PRs, zero manually-written code over five months. Their key insight: "corrections are cheap, and waiting is expensive."
