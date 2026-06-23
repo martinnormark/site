@@ -2,6 +2,8 @@
 import { defineConfig } from "astro/config";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
+import { unified } from "@astrojs/markdown-remark";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 
@@ -12,10 +14,18 @@ export default defineConfig({
 
   // Removed Cloudflare adapter to generate a static site for Pages
 
-  integrations: [
-    react(),
-    mdx({
-      syntaxHighlight: false,
+  vite: {
+    plugins: [tailwindcss()],
+  },
+
+  markdown: {
+    // Disable Astro's built-in highlighter so rehype-pretty-code owns it
+    syntaxHighlight: false,
+    // Astro 7 defaults to the native Sätteri pipeline, which does not run
+    // remark/rehype plugins. Use the unified() processor from
+    // @astrojs/markdown-remark to keep the remark/rehype pipeline. MDX
+    // inherits this top-level markdown config automatically.
+    processor: unified({
       rehypePlugins: [
         /**
          * Adds ids to headings
@@ -26,7 +36,6 @@ export default defineConfig({
            * Enhances code blocks with syntax highlighting, line numbers,
            * titles, and allows highlighting specific lines and words
            */
-
           rehypePrettyCode,
           {
             theme: "github-dark",
@@ -34,5 +43,7 @@ export default defineConfig({
         ],
       ],
     }),
-  ],
+  },
+
+  integrations: [react(), mdx()],
 });
