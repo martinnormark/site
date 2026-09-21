@@ -1,0 +1,25 @@
+---
+import LiveSearch from "emdash/ui/search";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Search" description="Search blog posts.">
+  <main class="flex-grow max-w-2xl mx-auto w-full px-6 py-16 md:py-24">
+    <div class="animate-fade-in-up mb-8">
+      <h1 class="text-2xl font-bold tracking-tight mb-2">Search</h1>
+      <p class="text-sm text-muted-foreground">Full-text search across blog posts.</p>
+    </div>
+
+    <div class="animate-fade-in-up delay-1 relative">
+      <LiveSearch
+        placeholder="Search posts..."
+        collections={["posts"]}
+        routeMap={{ posts: "/blog/:path" }}
+        autofocus
+        limit={10}
+        showSnippets={false}
+        class="site-search"
+      />
+    </div>
+  </main>
+</Layout>

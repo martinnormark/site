@@ -14,9 +14,9 @@ import { d1, r2 } from "@emdash-cms/cloudflare";
 export default defineConfig({
   site: "https://www.martinnormark.com",
 
-  // EmDash needs a server runtime for the admin UI and content API. The
-  // existing MDX pages opt back into static output with `export const
-  // prerender = true`, so they are still built ahead of time.
+  // EmDash needs a server runtime for the admin UI and content API, and the
+  // shared layout reads Site Settings and menus from D1 on every request, so
+  // nothing is prerendered.
   output: "server",
   adapter: cloudflare(),
 

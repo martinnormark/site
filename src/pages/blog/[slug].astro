@@ -22,7 +22,17 @@ const date = new Date(post.data.date);
 const tags = post.data.terms?.tag ?? [];
 ---
 
-<Layout title={`${post.data.title} - ${AUTHOR}`}>
+<Layout
+  title={post.data.title}
+  description={post.data.excerpt}
+  content={{ collection: "posts", id: post.data.id, slug: post.id }}
+  pageType="article"
+  articleMeta={{
+    publishedTime: date.toISOString(),
+    modifiedTime: post.data.updatedAt ? new Date(post.data.updatedAt).toISOString() : null,
+    author: AUTHOR,
+  }}
+>
   <main class="flex-grow max-w-2xl mx-auto px-6 py-16 md:py-24">
     <a
       href="/blog"

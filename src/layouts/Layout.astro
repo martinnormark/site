@@ -1,20 +1,80 @@
 ---
-import { Github } from "lucide-astro";
+import { getMenu, getSiteSettings, type MenuItem, type PublicPageContext } from "emdash";
+import { createPublicPageContext } from "emdash/page";
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { Github, Search } from "lucide-astro";
 import "../styles/global.css";
 
 interface Props {
-  title: string;
+  /** Page title. Omit for the site title alone (home page). */
+  title?: string;
+  /** Meta description. Falls back to the tagline from Site Settings. */
+  description?: string;
+  /** Set when the page renders a content entry so the SEO panel applies. */
+  content?: NonNullable<Parameters<typeof createPublicPageContext>[0]["content"]>;
+  pageType?: "website" | "article";
+  articleMeta?: PublicPageContext["articleMeta"];
+  image?: string;
 }
 
-const { title } = Astro.props;
+const { title, description, content, pageType, articleMeta, image } = Astro.props;
 const currentPath = Astro.url.pathname;
+
+// Site Settings (admin → Settings). Request-cached, so EmDashHead's own
+// call below reuses this result.
+const settings = await getSiteSettings();
+const siteTitle = settings.title ?? "Martin Høst Normark";
+const fullTitle = title ? `${title} - ${siteTitle}` : siteTitle;
+const pageDescription =
+  description ??
+  settings.tagline ??
+  "Martin Høst Normark - Principal Software Engineer, indie dev, ML enthusiast";
+
+const siteUrl = settings.url ?? Astro.site?.origin ?? Astro.url.origin;
+
+const page = createPublicPageContext({
+  Astro,
+  kind: content ? "content" : "custom",
+  pageType: pageType ?? (content ? "article" : "website"),
+  title: fullTitle,
+  pageTitle: title ?? siteTitle,
+  description: pageDescription,
+  // Canonical drives og:url and the BlogPosting JSON-LD. An editor-set
+  // canonical in the SEO panel overrides this default.
+  canonical: new URL(Astro.url.pathname, siteUrl).href,
+  content,
+  articleMeta,
+  image,
+  siteName: siteTitle,
+  siteUrl,
+});
+
+// Primary navigation (admin → Menus, name "primary"). Falls back to the
+// built-in links until a menu exists.
+const primaryMenu = await getMenu("primary");
+const navItems: Array<Pick<MenuItem, "label" | "url"> & Partial<MenuItem>> = primaryMenu?.items.length
+  ? primaryMenu.items
+  : [
+      { label: "home", url: "/" },
+      { label: "blog", url: "/blog" },
+    ];
+const isActive = (url: string) =>
+  url === "/" ? currentPath === "/" : currentPath.startsWith(url);
+
+// Social profiles from Site Settings store handles, not URLs.
+const handle = (value?: string) => value?.replace(/^@/, "").replace(/\/+$/, "");
+const socialLinks = [
+  { label: "x.com", href: `https://x.com/${handle(settings.social?.twitter) ?? "martinhn"}` },
+  { label: "github", href: `https://github.com/${handle(settings.social?.github) ?? "martinnormark"}` },
+  { label: "linkedin", href: `https://linkedin.com/in/${handle(settings.social?.linkedin) ?? "martinhn"}` },
+];
+const githubUrl = socialLinks[1].href;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="Martin Høst Normark - Principal Software Engineer, indie dev, ML enthusiast" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
@@ -25,10 +85,13 @@ const currentPath = Astro.url.pathname;
     <link rel="preconnect" href="https://cdn.vercel.com" crossorigin />
     <link href="https://cdn.vercel.com/fonts/geist-mono/style.css" rel="stylesheet" />
 
-    <title>{title}</title>
+    <title>{fullTitle}</title>
+    <!-- Description, canonical, Open Graph, Twitter card, JSON-LD, plugin head fragments -->
+    <EmDashHead page={page} />
   </head>
 
   <body class="grain font-sans">
+    <EmDashBodyStart page={page} />
     <div class="min-h-screen flex flex-col">
       <header class="border-b border-border/50">
         <div class="max-w-2xl mx-auto px-6 py-5 flex justify-between items-center">
@@ -36,29 +99,38 @@ const currentPath = Astro.url.pathname;
             href="/"
             class="font-mono text-sm tracking-wide text-foreground/70 hover:text-primary transition-colors duration-300"
           >
-            martin høst normark
+            {siteTitle.toLowerCase()}
           </a>
           <nav class="flex items-center gap-6">
+            {
+              navItems.map((item) => (
+                <a
+                  href={item.url}
+                  target={item.target}
+                  rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+                  title={item.titleAttr}
+                  class:list={[
+                    "text-sm transition-colors duration-300",
+                    item.cssClasses,
+                    isActive(item.url) ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                  ]}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
             <a
-              href="/"
+              href="/search"
               class:list={[
-                "text-sm transition-colors duration-300",
-                currentPath === "/" ? "text-primary" : "text-muted-foreground hover:text-foreground"
+                "transition-colors duration-300",
+                currentPath === "/search" ? "text-primary" : "text-muted-foreground hover:text-foreground",
               ]}
             >
-              home
+              <Search class="h-4 w-4" />
+              <span class="sr-only">Search</span>
             </a>
             <a
-              href="/blog"
-              class:list={[
-                "text-sm transition-colors duration-300",
-                currentPath.startsWith("/blog") ? "text-primary" : "text-muted-foreground hover:text-foreground"
-              ]}
-            >
-              blog
-            </a>
-            <a
-              href="https://github.com/martinnormark"
+              href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
               class="text-muted-foreground hover:text-foreground transition-colors duration-300"
@@ -78,33 +150,22 @@ const currentPath = Astro.url.pathname;
             &copy; {new Date().getFullYear()}
           </p>
           <div class="flex items-center gap-4">
-            <a
-              href="https://x.com/martinhn"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-xs text-muted-foreground hover:text-primary transition-colors duration-300 font-mono"
-            >
-              x.com
-            </a>
-            <a
-              href="https://github.com/martinnormark"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-xs text-muted-foreground hover:text-primary transition-colors duration-300 font-mono"
-            >
-              github
-            </a>
-            <a
-              href="https://linkedin.com/in/martinhn"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-xs text-muted-foreground hover:text-primary transition-colors duration-300 font-mono"
-            >
-              linkedin
-            </a>
+            {
+              socialLinks.map((link) => (
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-xs text-muted-foreground hover:text-primary transition-colors duration-300 font-mono"
+                >
+                  {link.label}
+                </a>
+              ))
+            }
           </div>
         </div>
       </footer>
     </div>
+    <EmDashBodyEnd page={page} />
   </body>
 </html>
