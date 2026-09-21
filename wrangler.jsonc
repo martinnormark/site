@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "martinnormark-com",
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-09-21",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+
+  // Serve only on the custom domain. The workers.dev origin is disabled so
+  // admin passkeys can only ever be registered against www.martinnormark.com.
+  "workers_dev": false,
+  "routes": [{ "pattern": "www.martinnormark.com", "custom_domain": true }],
+
+  // EmDash database. Binding name must stay "DB".
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "martinnormark-com-emdash",
+      "database_id": "1e0c49fd-01de-418c-ab10-7f192cc56699",
+    },
+  ],
+
+  // EmDash media library storage. Binding name must stay "MEDIA".
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "martinnormark-com-media",
+    },
+  ],
+
+  // Drives EmDash's scheduled publishing (src/worker.ts -> createScheduledHandler).
+  "triggers": { "crons": ["*/10 * * * *"] },
+}

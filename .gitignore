@@ -26,3 +26,8 @@ pnpm-debug.log*
 # wrangler files
 .wrangler
 .dev.vars
+
+# emdash (local sqlite/uploads if ever used, migration manifest)
+data.db
+uploads/
+.emdash/

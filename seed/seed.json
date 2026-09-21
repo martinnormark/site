@@ -1,0 +1,2578 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "defaultLocale": "en",
+  "meta": {
+    "name": "martinnormark.com",
+    "description": "Blog posts migrated from the MDX content collection",
+    "author": "Martin Høst Normark"
+  },
+  "settings": {
+    "title": "Martin Høst Normark",
+    "tagline": "engineering the uncertain",
+    "url": "https://www.martinnormark.com"
+  },
+  "collections": [
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "description": "Blog posts",
+      "supports": [
+        "drafts",
+        "revisions",
+        "scheduling",
+        "search",
+        "seo"
+      ],
+      "urlPattern": "/blog/{slug}",
+      "routable": true,
+      "titleField": "title",
+      "dateField": "date",
+      "admin": {
+        "listColumns": [
+          "date"
+        ]
+      },
+      "fields": [
+        {
+          "slug": "title",
+          "label": "Title",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "slug": "excerpt",
+          "label": "Excerpt",
+          "type": "text",
+          "searchable": true,
+          "options": {
+            "rows": 4
+          }
+        },
+        {
+          "slug": "date",
+          "label": "Date",
+          "type": "datetime",
+          "required": true,
+          "indexed": true
+        },
+        {
+          "slug": "content",
+          "label": "Content",
+          "type": "portableText",
+          "searchable": true
+        }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "name": "tag",
+      "label": "Tags",
+      "labelSingular": "Tag",
+      "hierarchical": false,
+      "collections": [
+        "posts"
+      ],
+      "terms": [
+        {
+          "slug": "abstraction-engineering",
+          "label": "abstraction engineering"
+        },
+        {
+          "slug": "ai",
+          "label": "ai"
+        },
+        {
+          "slug": "ai-agents",
+          "label": "ai-agents"
+        },
+        {
+          "slug": "astro",
+          "label": "astro"
+        },
+        {
+          "slug": "ci-cd",
+          "label": "ci-cd"
+        },
+        {
+          "slug": "context-engineering",
+          "label": "context engineering"
+        },
+        {
+          "slug": "developer-tooling",
+          "label": "developer-tooling"
+        },
+        {
+          "slug": "github-actions",
+          "label": "github-actions"
+        },
+        {
+          "slug": "integration",
+          "label": "integration"
+        },
+        {
+          "slug": "marketing",
+          "label": "marketing"
+        },
+        {
+          "slug": "product-design",
+          "label": "product design"
+        },
+        {
+          "slug": "programming",
+          "label": "programming"
+        },
+        {
+          "slug": "ux",
+          "label": "ux"
+        }
+      ]
+    }
+  ],
+  "content": {
+    "posts": [
+      {
+        "id": "post-mental-model-vs-implementation-model",
+        "slug": "mental-model-vs-implementation-model",
+        "status": "published",
+        "data": {
+          "title": "Mental Model vs. Implementation Model",
+          "excerpt": "The difference between a mental model and an implementation model.",
+          "date": "2015-01-11T00:00:00.000Z",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b0",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b0-s0",
+                  "text": "Note:",
+                  "marks": [
+                    "em",
+                    "strong"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b0-s1",
+                  "text": " This post was recently imported from my old site, original date preserved.",
+                  "marks": [
+                    "em"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b1-s0",
+                  "text": "One of the most useful concepts of UX and product design I've learned, is the difference between a mental model and an implementation model.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b2",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b2-s0",
+                  "text": "As programmers we have a tendency to think in technical, modular terms which is an implementation model. What does the implementation of this feature do? It creates a ZIP archive containing the files and folders.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b3-s0",
+                  "text": "On the mental model, it compresses files. Never mind ZIP, from a mental model perspective the various compression technologies doesn't matter. To the mental model of the user, compression is what it's doing and that is the result they want to achieve.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b4-s0",
+                  "text": "How does compression work on Windows and Mac?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b5-s0",
+                  "text": "Let's take a look at the context menu of a folder and see.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b6-s0",
+                  "text": "On Windows it says \"Add to archived folder\". Not that goal oriented, yet it doesn't mention ZIP or any other compression technology.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b7-s0",
+                  "text": "On Mac it's a little different. It says \"Compress files\" which is the exact result you might want to achieve.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b8-s0",
+                  "text": "I was actually fooled by this text, since I'm very technically and implementation minded, I thought for a second it would compress part of the disk. Like Windows 95 \"I'll-shrink-files-and-become-really-slow\" compression.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b9-s0",
+                  "text": "The hard part is to move above the implementation model, and think in a mental model instead. The implementation model and mindset is so deeply ingrained in us, that it’s almost impossible to set aside.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b10-s0",
+                  "text": "After all, we’ve taught ourselves to code and so many other things exactly by reverse engineering the implementation to see what’s underneath and how it works so we can align to fit the bill accordingly - and now you want to forget all that? Very difficult!",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b11-s0",
+                  "text": "One thing I find useful is to have a particular person in mind - someone you know and understand and knows what their job is and why and how they’re using the software you’re designing.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b12-s0",
+                  "text": "Try to ask yourself “what would that person think if I named the button ‘Add to archived folder’?” - actually imagine the person getting to use the product or feature for the first time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b13-s0",
+                  "text": "Sometimes when I think I’ve been really clever and came up with a clear and intuitive design, only to discover how flawed it is.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b14-s0",
+                  "text": "Often it only requires me to imagine that person use it, without seeing. If I pretend to show them at an earlier stage, it sometimes helps me shift my thinking more towards the mental model and forget being a developer for a brief moment.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "mental-model-vs-implementation-model-b15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "mental-model-vs-implementation-model-b15-s0",
+                  "text": "Another example of copy-paste. What happens if you press CTRL + C without selecting any text, file or folder - and then paste? Did it just copy empty to the clipboard, or did it know that it was an obvious mistake?",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "taxonomies": {
+          "tag": [
+            "ux",
+            "product-design"
+          ]
+        }
+      },
+      {
+        "id": "post-integration-as-marketing",
+        "slug": "integration-as-marketing",
+        "status": "published",
+        "data": {
+          "title": "Integration as Marketing",
+          "excerpt": "Turn product integrations into marketing opportunities. Instead of just building integrations, negotiate for promotion on their blog and email list in return.",
+          "date": "2015-01-27T00:00:00.000Z",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b0",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b0-s0",
+                  "text": "Note:",
+                  "marks": [
+                    "em",
+                    "strong"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b0-s1",
+                  "text": " This post was recently imported from my old site, original date preserved.",
+                  "marks": [
+                    "em"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b1-s0",
+                  "text": "In regard to iOS apps, this is not as relevant as it was before the app-to-app integration features of iOS 8.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b2",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b2-s0",
+                  "text": "Basically instead of just integrating another app/product with your own, you contact the vendor and ask them for a promotion on their blog, integrations page and e-mail list in return.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b3-s0",
+                  "text": "Hustle a little and let them know you have other integrations to pursue, if they’re reluctant to promote you.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b4-s0",
+                  "text": "It’s more about serving them, not you. Your product must add value to their customers. If your customers gets value too, that’s just great.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b5-s0",
+                  "text": "But your own customers is secondary here.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b6-s0",
+                  "text": "A good way to spot integration opportunities is to follow their blog and/or forums (provided they have any). People often submit feature requests, even in blog post comments and as forum posts. There's opportunity for lots of missing links in other products where you might be able to step in a solve a little problem that only helps the customer and also the vendor of the other app.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b7-s0",
+                  "text": "You’ll often see new feature announcements on a blog, in a separate category and the comments here often spin off of the announcement and ask for related features. If your product fills a gap, you have a great opportunity for an integration.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b8",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "integration-as-marketing-b8-l0",
+                  "href": "http://foolishadventure.com/audio/how-to-market-your-software-with-rob-walling-fa128/"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b8-s0",
+                  "text": "Rob Walling spoke briefly about it on a The Foolish Adventure Show podcast: ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b8-s1",
+                  "text": "http://foolishadventure.com/audio/how-to-market-your-software-with-rob-walling-fa128/",
+                  "marks": [
+                    "integration-as-marketing-b8-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b8-s2",
+                  "text": " — about 40 minutes in.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "integration-as-marketing-b9",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "integration-as-marketing-b9-l0",
+                  "href": "https://zapier.com/blog/integrations-simple-marketing-developers/"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b9-s0",
+                  "text": "Wade Foster of Zapier wrote a blog post about it here: ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b9-s1",
+                  "text": "https://zapier.com/blog/integrations-simple-marketing-developers/",
+                  "marks": [
+                    "integration-as-marketing-b9-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "integration-as-marketing-b9-s2",
+                  "text": " ",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "taxonomies": {
+          "tag": [
+            "integration",
+            "marketing"
+          ]
+        }
+      },
+      {
+        "id": "post-opinionated-vs-un-opinionated",
+        "slug": "opinionated-vs-un-opinionated",
+        "status": "published",
+        "data": {
+          "title": "Opinionated vs. Un-opinionated products",
+          "excerpt": "Every product is a manifestation of its creators' perspectives and beliefs. It's a reflection of the way they see the world and their values. Yet, what makes a product truly unique is the balance between the maker's opinions and the practical aspects of the product. Striking that balance is where the magic happens.",
+          "date": "2023-04-05T00:00:00.000Z",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b0",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b0-s0",
+                  "text": "Note:",
+                  "marks": [
+                    "em",
+                    "strong"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b0-s1",
+                  "text": " This post was recently imported from my old site, original date preserved.",
+                  "marks": [
+                    "em"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b1-s0",
+                  "text": "Every product is a manifestation of its creators' perspectives and beliefs. It's a reflection of the way they see the world and their values. Yet, what makes a product truly unique is the balance between the maker's opinions and the practical aspects of the product. Striking that balance is where the magic happens.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b2",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b2-s0",
+                  "text": "A product that is too heavily influenced by the maker's opinions may be limited in its appeal, while one that disregards their input risks losing its soul. Finding the sweet spot is key to creating a product that resonates with its intended audience while staying true to its creators' vision.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b3-s0",
+                  "text": "Roughly speaking, we can divide products into two wide opinion buckets:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b4-s0",
+                  "text": "Opinionated: strong opinions about the \"how of the problem\" that the product is trying to solve. Those opinions are deeply ingrained into the product, and easy to spot.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b5-s0",
+                  "text": "Un-opinionated: neutral tools, that let's you do things as you want",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b6-s0",
+                  "text": "Examples:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b7-s0",
+                  "text": "HEY - Opinionated",
+                  "marks": []
+                }
+              ],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b8-s0",
+                  "text": "Outlook - Un-opinionated",
+                  "marks": []
+                }
+              ],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b9-s0",
+                  "text": "Gmail - a little opinionated",
+                  "marks": []
+                }
+              ],
+              "listItem": "bullet",
+              "level": 1
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b10-s0",
+                  "text": "Opinionated products divides people, and the people who takes their side has a strong desire to show their support. Those people will often defend problems, even go as far as lying about it, to maintain their perfect view of the product.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b11-s0",
+                  "text": "Products that are designed to be neutral and un-opinionated often have broad appeal, but can lack a certain spark that ignites passion in their users. While these products may appeal to a wider audience, they often don't inspire the same level of loyalty or engagement as products that have a stronger point of view.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b12-s0",
+                  "text": "In fact, customers who don't feel particularly attached to a product are often quick to point out its flaws and will switch to a competitor if they find a better deal elsewhere. This makes it crucial for companies to find a way to create products that are both accessible to a wide audience and capable of fostering a sense of connection with their users.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b13",
+              "style": "h1",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b13-s0",
+                  "text": "Opinion alignment",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b14-s0",
+                  "text": "If you grab an opinionated product, and you don't agree with the opinions embedded into the product, you're going to have an awful experience. It will do things that you don't want it to do, and it will prevent you from doing things that you do want to do.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b15-s0",
+                  "text": "It will be one big fight, and you'll always be on the losing end.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b16-s0",
+                  "text": "For example, I love Arc and how it steers me away from \"tab pollution\". It does that by auto-archiving tabs, which I found strange to begin with. I actually changed the settings away from the default 12 hours of idle time for a tab to be archived after several days instead. They allowed me to tweak their opinions, but I changed it back after realising the idea is to either organise it into folders, notes, pinned tabs or get rid of it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b17",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b17-s0",
+                  "text": "Contrary to that, if you have strong opinions about a problem and you use an un-opinionated product, you will be able to do what you want, but it will feel like a huge burden on you, because you have to establish all the opinions yourself.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b18",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b18-s0",
+                  "text": "Take the example of e-mail, if you want to manage your email in a certain way, you must create the required folders for you to do so, you have to create rules or manually move emails arounds to fit your opinion and routine.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b19",
+              "style": "h1",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b19-s0",
+                  "text": "How do you find your own opinions?",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b20",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b20-s0",
+                  "text": "When you go look for e-mail services or e-mail clients, you want something that will match your opinion. But how do you find that? It's not like you get an opinion list to filter by.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b21",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b21-s0",
+                  "text": "This is also why you end up trying so many SaaS products to address the same problem. You sign up, try to go through a fake situation to evaluate the product and you often leave frustrated because it does 80% of what you want it to do, but there's this little thing that it does wrong, and another little thing that it doesn't do at all.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b22",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b22-s0",
+                  "text": "So the only product you'd be happy with, is made for a customer of one: You!",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b23",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b23-s0",
+                  "text": "There's always this little thing that makes you or your company so special. \"We always print the invoice after approval, so that we can keep it for accounting\".",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b24",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b24-s0",
+                  "text": "This is one of the reasons small SaaS companies can compete with big players in a given space; they have a strong opinion, they make noise about it, build community and create followers. Those become loyal customers, they make the company successful until they become the behemoth in this space and gets disrupted by a young team.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b25",
+              "style": "h1",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b25-s0",
+                  "text": "Integrations shapes Opinions",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b26",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b26-s0",
+                  "text": "Lots of software products, particularly SaaS products, offer a bunch of integrations with other services that you can use to tailor the different flows to better fit your need.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b27",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b27-s0",
+                  "text": "You can use those integrations to manifest your own opinions in the product to some extend, but it still relies on how this product chose to integrate with another product — a product that also has its own opinions, or a lack of them.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b28",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b28-s0",
+                  "text": "An API offered by a product is perhaps a stronger way to shape it the way you want. Instead of manually moving things around, to fit your opinionated workflow, you can do it with code, that uses their API to do things for you.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b29",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b29-s0",
+                  "text": "But it does require code.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b30",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b30-s0",
+                  "text": "Another common trend that's still rising, is trigger based automation. Zapier is a key player in this space. It is similar to an API, but without the need to write code.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "opinionated-vs-un-opinionated-b31",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "opinionated-vs-un-opinionated-b31-s0",
+                  "text": "You basically set a trigger, for example, when I receive an e-mail. Then you assign it an action, which could be take all the attachments and upload them to Dropbox.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "taxonomies": {
+          "tag": [
+            "product-design"
+          ]
+        }
+      },
+      {
+        "id": "post-ello-world",
+        "slug": "ello-world",
+        "status": "published",
+        "data": {
+          "title": "ello world",
+          "excerpt": "Lift off! Embarking on a journey with Astro! 👨‍🚀",
+          "date": "2024-11-16T00:00:00.000Z",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "ello-world-b0",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b0-l0",
+                  "href": "https://astro.build/"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b0-s0",
+                  "text": "Hey! First post is here, published using ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b0-s1",
+                  "text": "Astro",
+                  "marks": [
+                    "ello-world-b0-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b0-s2",
+                  "text": ".",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b1-s0",
+                  "text": "I will use this site as a devlog on my journey getting deeper into AI/ML.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b2",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b2-l0",
+                  "href": "https://scikit-learn.org/stable/"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b2-s0",
+                  "text": "My first interaction with machine learning was ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b2-s1",
+                  "text": "sklearn",
+                  "marks": [
+                    "ello-world-b2-l0",
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b2-s2",
+                  "text": ", which still has a fantastic and well designed API. I used it primarily for classification on tabular data. Think of a large spreadsheet with many columns, and you need to predict a column value based on the rest.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b3",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b3-l0",
+                  "href": "https://en.wikipedia.org/wiki/Word2vec"
+                },
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b3-l1",
+                  "href": "https://spacy.io/"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b3-s0",
+                  "text": "I opened the door to NLP in around 2017, when I discovered ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b3-s1",
+                  "text": "Word2vec",
+                  "marks": [
+                    "ello-world-b3-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b3-s2",
+                  "text": ". Never managed to get off the ground until I discovered ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b3-s3",
+                  "text": "SpaCy",
+                  "marks": [
+                    "ello-world-b3-l1"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b3-s4",
+                  "text": " where I managed to create some meaningful classification and named entity recognition. Still requried lots of labelling!",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b4",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b4-l0",
+                  "href": "https://huggingface.co/coref/"
+                },
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b4-l1",
+                  "href": "https://banana-projects-transformer-autocomplete.hf.space/"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b4-s0",
+                  "text": "Then came BERT and Hugging Face 🤗 was only a ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b4-s1",
+                  "text": "neural coreference system",
+                  "marks": [
+                    "ello-world-b4-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b4-s2",
+                  "text": ", but soon released ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b4-s3",
+                  "text": "Write with Transformers",
+                  "marks": [
+                    "ello-world-b4-l1"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b4-s4",
+                  "text": " and the rest is history!",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b5",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b5-l0",
+                  "href": "https://ecommerce.aviationeu.supplies/en/content/8-faaeasa-airworthiness-approval-forms-for-productsparts"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b5-s0",
+                  "text": "Computer Vision was often more effective on some tasks. For example classification of a dense document as being a certain type of form (",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b5-s1",
+                  "text": "airworthiness approval forms",
+                  "marks": [
+                    "ello-world-b5-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b5-s2",
+                  "text": ") was more efficient with better accuracy as an image classification problem using AWS Rekognition at the time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b6-s0",
+                  "text": "Applied similar technique to find page orientation problems in scanned documents:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b7",
+              "style": "blockquote",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b7-l0",
+                  "href": "https://twitter.com/MartinHN/status/1440762582910963712"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b7-s0",
+                  "text": "https://twitter.com/MartinHN/status/1440762582910963712",
+                  "marks": [
+                    "ello-world-b7-l0"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b8-s0",
+                  "text": "Object detection was also useful with document images:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b9",
+              "style": "blockquote",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "ello-world-b9-l0",
+                  "href": "https://twitter.com/MartinHN/status/976928114575134720"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b9-s0",
+                  "text": "https://twitter.com/MartinHN/status/976928114575134720",
+                  "marks": [
+                    "ello-world-b9-l0"
+                  ]
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "ello-world-b10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "ello-world-b10-s0",
+                  "text": "Today, large language models and moreso, Vision Language Models (VLMs) can do all of this with few-shot prompting (if not zero-shot). For efficiency, use it to label examples and distil a smaller model, optimize it with quantization and ONNX runtime and you have a beast!",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "taxonomies": {
+          "tag": [
+            "astro"
+          ]
+        }
+      },
+      {
+        "id": "post-from-memory-to-minds",
+        "slug": "from-memory-to-minds",
+        "status": "published",
+        "data": {
+          "title": "From Memory to Minds: Why We're Trading Control for Exponential Expressiveness",
+          "excerpt": "We're trading control for exponential expressiveness. Is this a good trade?",
+          "date": "2025-09-12T00:00:00.000Z",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b0",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b0-s0",
+                  "text": "Twenty to thirty years ago, if you suggested that developers should stop manually managing memory allocation, you'd be laughed out of the room. \"Garbage collection will never be fast enough!\" they'd protest, insisting they needed to control exactly when memory was freed.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b1-s0",
+                  "text": "The resistance was fierce, the arguments passionate, and the skepticism absolute. Today, most developers haven't thought about malloc and free in years, and those who do work in specialized domains where every microsecond matters.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b2",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b2-s0",
+                  "text": "This pattern—initial resistance followed by complete adoption—has repeated itself at every level of the software stack. We've climbed from managing individual bits to expressing pure business intent.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b3-s0",
+                  "text": "Each rung up the ladder has triggered the same cycle of skepticism and eventual surrender. Real programmers once wrote assembly because high-level languages were \"too slow and unpredictable.\"",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b4",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b4-s0",
+                  "text": "Systems engineers demanded direct hardware control before operating system APIs proved their worth. Network programmers insisted on socket-level management until HTTP and REST APIs made connection handling obsolete.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b5-s0",
+                  "text": "This historical pattern brings us to the current chapter: the Intelligence Layer. This abstraction promises to eliminate the cognitive burden of writing implementation logic itself, just as garbage collection freed us from memory management.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b6",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b6-s0",
+                  "text": "The resistance sounds predictably familiar: \"AI can't write production code!\" \"I need to see exactly how every algorithm works!\" Yet the evidence contradicts the skepticism.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b7-s0",
+                  "text": "GitHub Copilot now generates over 35% of code in repositories where it's enabled. Companies like Replit are building entire applications using AI agents that understand requirements and generate working implementations.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b8-s0",
+                  "text": "Multi-agentic systems are emerging where humans orchestrate workflows of specialized AI agents rather than writing code line by line. AutoGPT-style frameworks now handle complex data processing pipelines that once required careful ETL scripting, adapting their approach as requirements evolve through natural language feedback.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b9",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b9-s0",
+                  "text": "Semantic search implementations that previously demanded weeks of vector database engineering and embedding model fine-tuning can now be specified in conversational instructions to specialized agents. The paradigm shift isn't about writing perfect code—it's about specifying what the system should accomplish and letting intelligent agents determine how.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b10-s0",
+                  "text": "This represents the most dramatic trade-off in software history: surrendering line-by-line implementation control in exchange for exponential increases in expressiveness. Consider that a single prompt to GPT-4 can now generate applications that would have required 50,000+ lines of traditional code and months of development time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b11-s0",
+                  "text": "Where we once validated systems through code review and unit tests, we're developing new quality measures. Intent verification, outcome validation, and behavioral testing now focus on what the system does rather than how it does it.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b12",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b12-s0",
+                  "text": "The climb up the abstraction stack is inevitable because cognitive overhead reduction always defeats control retention. Yes, abstractions leak and sometimes fail in unexpected ways.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b13-s0",
+                  "text": "But we adapt by developing new tools suited to higher levels of operation. Just as we learned to profile memory usage instead of tracking every allocation, we're learning to monitor agent behavior instead of debugging every conditional statement.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b14",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b14-s0",
+                  "text": "The human sweet spot is shifting from writing code to composing intelligence. We're becoming architects of autonomous systems rather than implementers of predetermined logic.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b15-s0",
+                  "text": "In ten years, writing implementation code will feel like manual memory management does today: something specialists do only when absolutely necessary. We're approaching a world where describing what you want is sufficient to bring complex systems into existence.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "from-memory-to-minds-b16",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "from-memory-to-minds-b16-s0",
+                  "text": "The Intelligence Layer represents the abstraction that finally closes the gap between human thought and digital reality. The only question isn't whether this transition will happen, but how quickly we'll embrace the most powerful expressiveness gain in computing history.",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "taxonomies": {
+          "tag": [
+            "ai",
+            "programming",
+            "context-engineering",
+            "abstraction-engineering"
+          ]
+        }
+      },
+      {
+        "id": "post-building-a-risk-aware-pr-validation-harness",
+        "slug": "building-a-risk-aware-pr-validation-harness",
+        "status": "published",
+        "data": {
+          "title": "Building a Risk-Aware PR Validation Harness for AI-Authored Code",
+          "excerpt": "When AI agents write code, PR volume explodes but manual review doesn't scale. Here's how to build a system that classifies PRs by risk, captures browser evidence, and reports merge readiness — with real code, config, and hard-won lessons from CI.",
+          "date": "2026-04-06T00:00:00.000Z",
+          "content": [
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b0",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b0-s0",
+                  "text": "The moment your AI coding agents start shipping real features, you discover an uncomfortable truth: your CI pipeline was designed for human-paced development. Three PRs a day from a team of five is manageable; thirty from a fleet of Claude Code and Codex sessions is not. The bottleneck isn't the agents -- it's you, applying the same scrutiny to a CSS padding fix as to an auth middleware rewrite.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b1",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b1-s0",
+                  "text": "The fix isn't more reviewers. It's a system that understands risk. I've been building what I call a risk-aware PR validation harness, and this post walks through the architecture, the code, and the hard-won lessons from getting it running in CI.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b2",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b2-s0",
+                  "text": "The classifier drives everything downstream",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b3",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b3-s0",
+                  "text": "The whole system runs as a single GitHub Actions workflow with five jobs. The classifier's output controls which jobs run and what the merge-readiness comment reports.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b4",
+              "code": "PR opened/synchronized\n        │\n        ▼\n┌───────────────────┐\n│ Risk Classifier   │──▶ Reads changed files, matches against config\n└────────┬──────────┘\n         │ tier, segments, required checks\n         ▼\n┌─────────────────┐     ┌─────────────────┐\n│  Apply Label    │     │ Build + Types   │\n│  risk:<tier>    │     │ + Unit Tests    │\n└─────────────────┘     └────────┬────────┘\n                                 │\n         ┌───────────────────────┘\n         ▼                       ▼\n┌──────────────────┐     ┌─────────────────┐\n│ Browser Evidence │     │ Merge Readiness │\n│ (conditional)    │     │ Comment         │\n└────────┬─────────┘     └─────────────────┘\n         │ screenshots, video, HAR\n         ▼\n┌──────────────────┐\n│ Upload to R2     │──▶ Presigned URLs in manifest\n└──────────────────┘"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b5",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b5-s0",
+                  "text": "Classify, label, build, capture evidence, report readiness. The classifier decides what level of scrutiny a PR gets; everything else follows from that decision.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b6",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b6-s0",
+                  "text": "Segments map to user impact, not package structure",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b7",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b7-s0",
+                  "text": "Before writing any code, you map your application into segments -- modules as your end user experiences them, not as your codebase organizes them. A change to ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b7-s1",
+                  "text": "auth-client.ts",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b7-s2",
+                  "text": " in the web app and ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b7-s3",
+                  "text": "auth.ts",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b7-s4",
+                  "text": " in the server both affect the \"auth\" segment. Risk should map to user impact, not internal package boundaries.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b8",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b8-s0",
+                  "text": "A single JSON config is the source of truth:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b9",
+              "code": "// harness/risk-tiers.json\n{\n  \"segments\": {\n    \"auth\": {\n      \"name\": \"Auth\",\n      \"paths\": [\n        \"apps/web/src/app/(auth)/**\",\n        \"apps/web/src/lib/auth-client.ts\",\n        \"apps/server/src/auth/**\",\n      ],\n      \"routes\": [\"/login\", \"/signup\"],\n      \"riskTier\": \"high\",\n    },\n    \"dashboard\": {\n      \"name\": \"Dashboard\",\n      \"paths\": [\"apps/web/src/app/dashboard/**\"],\n      \"routes\": [\"/dashboard\"],\n      \"riskTier\": \"medium\",\n    },\n    \"database\": {\n      \"name\": \"Database Schema\",\n      \"paths\": [\"packages/database/src/schema/**\"],\n      \"routes\": [],\n      \"riskTier\": \"high\",\n    },\n  },\n  \"overrides\": [\n    {\n      \"pattern\": \"packages/database/src/schema/*.ts\",\n      \"tier\": \"high\",\n      \"reason\": \"Schema changes affect data integrity\",\n    },\n    {\n      \"pattern\": \".github/workflows/**\",\n      \"tier\": \"high\",\n      \"reason\": \"CI changes affect all PRs\",\n    },\n  ],\n  \"defaults\": {\n    \"tier\": \"low\",\n    \"segment\": \"unclassified\",\n  },\n  \"mergePolicy\": {\n    \"high\": { \"requiredChecks\": [\"build\", \"browser-evidence\", \"human-review\"] },\n    \"medium\": { \"requiredChecks\": [\"build\"] },\n    \"low\": { \"requiredChecks\": [\"build\"] },\n  },\n}",
+              "language": "jsonc"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b10",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b10-s0",
+                  "text": "Three design decisions are worth naming explicitly. First, the ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b10-s1",
+                  "text": "routes",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b10-s2",
+                  "text": " field gates browser evidence -- if a segment has no routes, the harness skips the browser launch and falls back to type-checks and unit tests. Second, overrides exist for cross-cutting concerns: schema files are always high-risk regardless of which segment they fall under. Third, when a PR spans multiple segments, the highest tier wins -- one high-risk file triggers full checks, because under-validating an auth change is far more expensive than over-validating a typo.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b11",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b11-s0",
+                  "text": "This config is declarative, auditable, and diffable. When an agent adds a new feature, it can add the segment config in the same PR.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b12",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b12-s0",
+                  "text": "The classifier emits a contract",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b13",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b13-s0",
+                  "text": "The classifier reads the git diff, matches changed files against the config, and emits a JSON contract that drives everything downstream:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b14",
+              "code": "import { minimatch } from \"minimatch\";\n\ninterface ClassifierOutput {\n  tier: \"high\" | \"medium\" | \"low\";\n  segments: Array<{ name: string; tier: string; files: string[] }>;\n  needsBrowserEvidence: boolean;\n  requiredChecks: string[];\n}\n\nfunction classify(\n  changedFiles: string[],\n  config: RiskTiersConfig,\n): ClassifierOutput {\n  const matched = new Map<string, { tier: string; files: string[] }>();\n\n  function addToSegment(segName: string, tier: string, file: string) {\n    const existing = matched.get(segName) ?? { tier, files: [] };\n    existing.tier = highestTier([existing.tier, tier]);\n    existing.files.push(file);\n    matched.set(segName, existing);\n  }\n\n  for (const file of changedFiles) {\n    // Check overrides first (highest precedence)\n    let classified = false;\n    for (const override of config.overrides) {\n      if (minimatch(file, override.pattern)) {\n        addToSegment(\"infra\", override.tier, file);\n        classified = true;\n        break;\n      }\n    }\n\n    if (!classified) {\n      for (const [segName, seg] of Object.entries(config.segments)) {\n        if (seg.paths.some((p) => minimatch(file, p))) {\n          addToSegment(segName, seg.riskTier, file);\n          classified = true;\n          break;\n        }\n      }\n    }\n\n    // Falls through to defaults.segment / defaults.tier if unclassified\n    if (!classified) {\n      addToSegment(config.defaults.segment, config.defaults.tier, file);\n    }\n  }\n\n  const segments = [...matched.entries()].map(([name, { tier, files }]) => ({\n    name,\n    tier,\n    files,\n  }));\n  const tier = highestTier(segments.map((s) => s.tier));\n\n  const needsBrowserEvidence = segments.some(\n    (s) => config.segments[s.name]?.routes?.length > 0,\n  );\n\n  const requiredChecks = config.mergePolicy[tier].requiredChecks.filter(\n    (c) => c !== \"browser-evidence\" || needsBrowserEvidence,\n  );\n\n  return { tier, segments, needsBrowserEvidence, requiredChecks };\n}",
+              "language": "typescript"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b15",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b15-s0",
+                  "text": "It supports two modes: CI mode (",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b15-s1",
+                  "text": "--base origin/main",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b15-s2",
+                  "text": ") uses ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b15-s3",
+                  "text": "git diff origin/main...HEAD",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b15-s4",
+                  "text": " for committed changes, and local mode (no flags) uses staged + unstaged + untracked files so developers can check their risk tier before pushing.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b16",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b16-s0",
+                  "text": "Browser evidence, not just pass/fail",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b17",
+              "style": "normal",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b17-l0",
+                  "href": "https://github.com/vercel-labs/agent-browser"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b17-s0",
+                  "text": "For high-risk PRs touching user-facing routes, the harness launches a headless browser and captures real evidence. I'm using ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b17-s1",
+                  "text": "agent-browser",
+                  "marks": [
+                    "building-a-risk-aware-pr-validation-harness-b17-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b17-s2",
+                  "text": ", a Rust-based CLI from Vercel Labs that speaks Chrome DevTools Protocol. Each command is a single ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b17-s3",
+                  "text": "npx agent-browser <command>",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b17-s4",
+                  "text": " invocation -- no Playwright boilerplate, no page object models, no test runner framework.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b18",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b18-s0",
+                  "text": "Each browser-testable segment gets its own test file. Tests are plain scripts; the exit code is the result:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b19",
+              "code": "// harness/browser-tests/auth.ts\nasync function main() {\n  await startRecording(`${evidenceDir}/recording.webm`);\n  await run([\"network\", \"har\", \"start\"]);\n\n  try {\n    await run([\"open\", `${webUrl}/login`]);\n    await run([\"wait\", \"--load\", \"networkidle\"]);\n    await run([\"screenshot\", `${evidenceDir}/login-form.png`]);\n\n    // Verify form fields exist via accessibility snapshot\n    const snapshot = await run([\"snapshot\", \"-i\"]);\n    assert(\n      snapshot.toLowerCase().includes(\"email\"),\n      \"Email field should be visible\",\n    );\n\n    // Sign in and verify redirect\n    await run([\"fill\", \"#email\", email]);\n    await run([\"fill\", \"#password\", password]);\n    await run([\"click\", \"button[type=submit]\"]);\n    await run([\"wait\", \"8000\"]);\n\n    const url = (await run([\"get\", \"url\"])).trim();\n    assert(\n      !url.includes(\"/login\"),\n      `Should redirect after sign-in, got: ${url}`,\n    );\n    await run([\"screenshot\", `${evidenceDir}/post-login-redirect.png`]);\n  } finally {\n    await stopRecording();\n    await run([\"network\", \"har\", \"stop\", `${evidenceDir}/network.har`]);\n    await cleanup();\n  }\n}",
+              "language": "typescript"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b20",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b20-s0",
+                  "text": "After a test run, the evidence directory looks like this:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b21",
+              "code": "harness/evidence/auth/\n  login-form.png\n  post-login-redirect.png\n  recording.webm\n  network.har"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b22",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b22-s0",
+                  "text": "This isn't pass/fail. It's machine-verifiable proof: screenshots of what the user would see, video of the full interaction, and HAR files capturing every network request.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b23",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b23-s0",
+                  "text": "Evidence gets uploaded to Cloudflare R2 (any S3-compatible storage works) with presigned URLs, and the upload script enriches the manifest in-place so downstream scripts don't need storage credentials:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b24",
+              "code": "const keyPrefix = `evidence/pr-${pr}/${timestamp}`;\n\nfor (const screenshot of seg.screenshots) {\n  const key = `${keyPrefix}/${seg.name}/${screenshot.step}.png`;\n  await s3.send(\n    new PutObjectCommand({ Bucket, Key: key, Body, ContentType: \"image/png\" }),\n  );\n  screenshot.url = await getSignedUrl(\n    s3,\n    new GetObjectCommand({ Bucket, Key: key }),\n    {\n      expiresIn: 7 * 24 * 60 * 60, // 7 days\n    },\n  );\n}",
+              "language": "typescript"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b25",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b25-s0",
+                  "text": "Why object storage instead of GitHub artifacts? Presigned URLs can be embedded directly in PR comments as images and links -- no artifact download dance. Set a bucket expiry rule (90 days) and evidence auto-deletes.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b26",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b26-s0",
+                  "text": "The sharp edges",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b27",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b27-s0",
+                  "text": "Three lessons cost us real debugging time before the harness ran reliably in CI.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b28",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b28-s0",
+                  "text": "Video encoding is asynchronous.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b28-s1",
+                  "text": " ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b28-s2",
+                  "text": "agent-browser record stop",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b28-s3",
+                  "text": " signals Chrome's screencast to halt, but ffmpeg needs time to finalize the WebM container. Call ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b28-s4",
+                  "text": "close",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b28-s5",
+                  "text": " too early and you get zero-byte files. Our first implementation also caught and silenced all recording errors, which hid the root cause (missing ffmpeg) for multiple CI runs. Every browser automation helper should surface errors and verify the output file exists:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b29",
+              "code": "export async function stopRecording(): Promise<boolean> {\n  if (!recordingPath) return false;\n  try {\n    const proc = Bun.spawn([\"bunx\", \"agent-browser\", \"record\", \"stop\"], {\n      stdout: \"pipe\",\n      stderr: \"pipe\",\n    });\n    await proc.exited;\n\n    // Poll for the file — encoder needs time to finalize\n    const deadline = Date.now() + 10_000;\n    let exists = false;\n    while (Date.now() < deadline) {\n      if (await Bun.file(recordingPath).exists()) {\n        exists = true;\n        break;\n      }\n      await Bun.sleep(250);\n    }\n\n    if (!exists)\n      console.warn(`WARNING: Recording file not found: ${recordingPath}`);\n    return exists;\n  } catch (err) {\n    console.warn(`WARNING: record stop failed: ${(err as Error).message}`);\n    return false;\n  }\n}",
+              "language": "typescript"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b30",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b30-s0",
+                  "text": "Polling at 250ms with a 10-second deadline is ugly but reliable.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b31",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b31-s0",
+                  "text": "Seed through your auth layer, not the database.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b31-s1",
+                  "text": " Direct DB inserts bypass validation, skip org setup, and create records your auth library won't recognize. In practice, this meant auth tokens that looked valid but returned silent 401s on every protected route -- ghost records that broke the moment real middleware touched them. The kind of failure that looks like a flaky test until you trace it to a user object no sign-up flow ever created. The fix: use your actual sign-up endpoints:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b32",
+              "code": "async function seedTestUser() {\n  const signUpRes = await fetch(`${serverUrl}/api/auth/sign-up/email`, {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\", Origin: origin },\n    body: JSON.stringify({ name: \"Harness Test\", email, password }),\n  });\n\n  // If user exists, sign in instead\n  if (signUpRes.status === 422) {\n    const signInRes = await fetch(`${serverUrl}/api/auth/sign-in/email`, { ... });\n    sessionCookie = extractSessionCookie(signInRes);\n  }\n\n  // Create org (authenticated)\n  await fetch(`${serverUrl}/api/auth/organization/create`, {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\", Cookie: sessionCookie, Origin: origin },\n    body: JSON.stringify({ name: \"Harness Test Org\", slug: \"harness-test\" }),\n  });\n}",
+              "language": "typescript"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b33",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b33-s0",
+                  "text": "Every test user becomes indistinguishable from a real one, the script validates your auth flow as a side effect, and making it idempotent means it runs safely each time.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b34",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b34-s0",
+                  "text": "Use one workflow, not many.",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b34-s1",
+                  "text": " Our first implementation used three separate workflows triggered on the same PR event; labels, comments, and status checks fell into race conditions within minutes. One workflow with job-level ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b34-s2",
+                  "text": "if",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b34-s3",
+                  "text": " conditions and ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b34-s4",
+                  "text": "needs",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b34-s5",
+                  "text": " dependencies is simpler to reason about and debug.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b35",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b35-s0",
+                  "text": "The CI workflow",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b36",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s0",
+                  "text": "The whole thing runs as one workflow with five jobs: classify, label, build-and-type-check, browser-evidence, merge-readiness. The classifier outputs drive conditional execution -- ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s1",
+                  "text": "browser-evidence",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s2",
+                  "text": " only runs when ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s3",
+                  "text": "needsBrowserEvidence",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s4",
+                  "text": " is true, and ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s5",
+                  "text": "merge-readiness",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s6",
+                  "text": " runs with ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s7",
+                  "text": "if: always()",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b36-s8",
+                  "text": " so it reports even when upstream jobs fail.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b37",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b37-s0",
+                  "text": "One thing that will bite you: agent-browser's video recording depends on ffmpeg and a full set of Chrome runtime dependencies that aren't on the GitHub Actions Ubuntu image. Two CI runs produced no video output and no error before we identified the missing libraries. Here's the install step:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b38",
+              "code": "- name: Install Chrome runtime dependencies\n  run: |\n    sudo apt-get update\n    sudo apt-get install -y \\\n      ffmpeg \\\n      ca-certificates fonts-liberation libasound2t64 \\\n      libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 \\\n      libcairo2 libcups2 libdbus-1-3 libgbm1 libglib2.0-0 \\\n      libgtk-3-0t64 libnspr4 libnss3 libpango-1.0-0 \\\n      libvulkan1 libx11-6 libxcb1 libxcomposite1 \\\n      libxdamage1 libxext6 libxfixes3 libxkbcommon0 \\\n      libxrandr2 wget xdg-utils\n\n- name: Install agent-browser Chrome\n  run: npx agent-browser install --with-deps",
+              "language": "yaml"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b39",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b39-s0",
+                  "text": "The merge-readiness comment",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b40",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b40-s0",
+                  "text": "The final job posts a PR comment summarizing what passed, what failed, and where to find evidence. The comment uses an HTML marker (",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b40-s1",
+                  "text": "<!-- harness-merge-readiness -->",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b40-s2",
+                  "text": ") so it can be found and updated on subsequent pushes rather than creating duplicate comments:",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "code",
+              "_key": "building-a-risk-aware-pr-validation-harness-b41",
+              "code": "## Merge Readiness — Risk: low\n\n| Check              | Status    |\n| ------------------ | --------- |\n| Build & Type Check | ✅ Passed |\n| Browser Evidence   | ✅ Passed |\n\n### Evidence: auth\n\n| Step                | Screenshot                                               |\n| ------------------- | -------------------------------------------------------- |\n| login-form          | ![login-form](https://r2.../login-form.png?...)          |\n| post-login-redirect | ![post-login](https://r2.../post-login-redirect.png?...) |\n\n[View recording](https://r2.../recording.webm?...)",
+              "language": "markdown"
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b42",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b42-s0",
+                  "text": "Screenshots embedded directly in the PR. Video one click away. No artifact download, no separate tab, no friction.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b43",
+              "style": "h2",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b43-s0",
+                  "text": "What this changes",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b44",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b44-s0",
+                  "text": "What changes is structural, not cosmetic. Agents ship low-risk changes without browser evidence or human approval. Humans focus where it matters -- PRs with ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b44-s1",
+                  "text": "risk:high",
+                  "marks": [
+                    "code"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b44-s2",
+                  "text": " labels and full evidence trails. Every PR becomes auditable with timestamped artifacts that auto-expire -- six months from now, you can pull up any merged PR and see exactly what the login page looked like when the auth change shipped, frame by frame.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b45",
+              "style": "normal",
+              "markDefs": [],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b45-s0",
+                  "text": "Adding a new segment is a JSON config change. Adding a new browser test is a single script file. The classifier, capture orchestrator, and merge-readiness reporter adapt automatically. When agents produce more PRs than your team does, that leverage isn't optional -- it's infrastructure.",
+                  "marks": []
+                }
+              ]
+            },
+            {
+              "_type": "block",
+              "_key": "building-a-risk-aware-pr-validation-harness-b46",
+              "style": "blockquote",
+              "markDefs": [
+                {
+                  "_type": "link",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-l0",
+                  "href": "https://x.com/ryancarson/status/2023452909883609111"
+                },
+                {
+                  "_type": "link",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-l1",
+                  "href": "https://openai.com/index/harness-engineering/"
+                }
+              ],
+              "children": [
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-s0",
+                  "text": "Related reading:",
+                  "marks": [
+                    "strong"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-s1",
+                  "text": " Ryan Carson describes the same loop in his ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-s2",
+                  "text": "Code Factory",
+                  "marks": [
+                    "building-a-risk-aware-pr-validation-harness-b46-l0"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-s3",
+                  "text": " thread -- agent writes code, repo enforces risk-aware checks, review agent validates the PR, evidence is machine-verifiable, findings feed back into the harness. The pattern is converging across teams. For the original inspiration, see Ryan Lopopolo's ",
+                  "marks": []
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-s4",
+                  "text": "Harness engineering: leveraging Codex in an agent-first world",
+                  "marks": [
+                    "building-a-risk-aware-pr-validation-harness-b46-l1"
+                  ]
+                },
+                {
+                  "_type": "span",
+                  "_key": "building-a-risk-aware-pr-validation-harness-b46-s5",
+                  "text": " -- 3 engineers, ~1,500 merged PRs, zero manually-written code over five months. Their key insight: \"corrections are cheap, and waiting is expensive.\"",
+                  "marks": []
+                }
+              ]
+            }
+          ]
+        },
+        "taxonomies": {
+          "tag": [
+            "ci-cd",
+            "ai-agents",
+            "developer-tooling",
+            "github-actions"
+          ]
+        }
+      }
+    ]
+  }
+}

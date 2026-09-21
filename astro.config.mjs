@@ -1,18 +1,24 @@
 // @ts-check
 import { defineConfig } from "astro/config";
+import cloudflare from "@astrojs/cloudflare";
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { unified } from "@astrojs/markdown-remark";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
+import emdash from "emdash/astro";
+import { d1, r2 } from "@emdash-cms/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://www.martinnormark.com",
-  output: "static",
 
-  // Removed Cloudflare adapter to generate a static site for Pages
+  // EmDash needs a server runtime for the admin UI and content API. The
+  // existing MDX pages opt back into static output with `export const
+  // prerender = true`, so they are still built ahead of time.
+  output: "server",
+  adapter: cloudflare(),
 
   vite: {
     plugins: [tailwindcss()],
@@ -45,5 +51,13 @@ export default defineConfig({
     }),
   },
 
-  integrations: [react(), mdx()],
+  integrations: [
+    react(),
+    mdx(),
+    emdash({
+      // Binding names must match wrangler.jsonc (DB, MEDIA).
+      database: d1({ binding: "DB" }),
+      storage: r2({ binding: "MEDIA" }),
+    }),
+  ],
 });

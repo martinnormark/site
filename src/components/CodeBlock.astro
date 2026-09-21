@@ -1,0 +1,49 @@
+---
+/**
+ * Portable Text `code` block override for EmDash content.
+ *
+ * Replaces EmDash's default Code component so code blocks use the site's
+ * prose tokens (see --tw-prose-pre-* in global.css) instead of its own
+ * hard-coded colours. No syntax highlighting yet — see README follow-ups.
+ */
+interface Props {
+  node: {
+    _type: "code";
+    _key: string;
+    code: string;
+    language?: string;
+    filename?: string;
+  };
+}
+
+const { node } = Astro.props;
+const languageClass = node.language ? `language-${node.language}` : undefined;
+---
+
+{
+  node?.code && (
+    <figure class="code-block" data-language={node.language}>
+      {node.filename && <figcaption>{node.filename}</figcaption>}
+      <pre class={languageClass}><code class={languageClass}>{node.code}</code></pre>
+    </figure>
+  )
+}
+
+<style>
+  .code-block {
+    margin: 1.5rem 0;
+  }
+  .code-block figcaption {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.75rem;
+    color: var(--tw-prose-pre-code);
+    background: var(--tw-prose-pre-bg);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+    border-bottom: 1px solid hsl(var(--border) / 0.4);
+  }
+  .code-block figcaption + pre {
+    border-radius: 0 0 0.5rem 0.5rem;
+    margin-top: 0;
+  }
+</style>
