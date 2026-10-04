@@ -1,0 +1,4 @@
+# Merged by @astrojs/cloudflare with its own /_astro/* rule at build time.
+# Font filenames are not hashed: rename the file when replacing one.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable

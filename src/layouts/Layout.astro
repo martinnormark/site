@@ -32,6 +32,11 @@ const pageDescription =
 
 const siteUrl = settings.url ?? Astro.site?.origin ?? Astro.url.origin;
 
+// Social card fallback (public/og.jpg, 1200x630). A default OG image set in
+// admin → Settings → SEO wins, as does an entry's own SEO-panel image.
+const ogImage =
+  image ?? (settings.seo?.defaultOgImage ? undefined : new URL("/og.jpg", siteUrl).href);
+
 const page = createPublicPageContext({
   Astro,
   kind: content ? "content" : "custom",
@@ -44,7 +49,7 @@ const page = createPublicPageContext({
   canonical: new URL(Astro.url.pathname, siteUrl).href,
   content,
   articleMeta,
-  image,
+  image: ogImage,
   siteName: siteTitle,
   siteUrl,
 });
@@ -75,19 +80,34 @@ const githubUrl = socialLinks[1].href;
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0d0f12" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f9f7f6" media="(prefers-color-scheme: light)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
-    <link rel="preconnect" href="https://cdn.vercel.com" crossorigin />
-    <link href="https://cdn.vercel.com/fonts/geist-mono/style.css" rel="stylesheet" />
+    <!-- Body font is self-hosted and on every page, so fetch it before the CSS asks -->
+    <link rel="preload" href="/fonts/Satoshi-Regular.woff2" as="font" type="font/woff2" crossorigin />
 
     <title>{fullTitle}</title>
     <!-- Description, canonical, Open Graph, Twitter card, JSON-LD, plugin head fragments -->
     <EmDashHead page={page} />
+    <slot name="head" />
+
+    <!-- Prerender same-site pages on hover; browsers without support ignore it -->
+    <script
+      is:inline
+      type="speculationrules"
+      set:html={JSON.stringify({
+        prerender: [
+          {
+            where: { and: [{ href_matches: "/*" }, { not: { href_matches: "/_emdash/*" } }] },
+            eagerness: "moderate",
+          },
+        ],
+      })}
+    />
   </head>
 
   <body class="grain font-sans">
@@ -101,7 +121,7 @@ const githubUrl = socialLinks[1].href;
           >
             {siteTitle.toLowerCase()}
           </a>
-          <nav class="flex items-center gap-6">
+          <nav aria-label="Primary" class="flex items-center gap-6">
             {
               navItems.map((item) => (
                 <a
@@ -109,6 +129,7 @@ const githubUrl = socialLinks[1].href;
                   target={item.target}
                   rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
                   title={item.titleAttr}
+                  aria-current={currentPath === item.url ? "page" : isActive(item.url) ? "true" : undefined}
                   class:list={[
                     "text-sm transition-colors duration-300",
                     item.cssClasses,
@@ -121,12 +142,13 @@ const githubUrl = socialLinks[1].href;
             }
             <a
               href="/search"
+              aria-current={currentPath === "/search" ? "page" : undefined}
               class:list={[
                 "transition-colors duration-300",
                 currentPath === "/search" ? "text-primary" : "text-muted-foreground hover:text-foreground",
               ]}
             >
-              <Search class="h-4 w-4" />
+              <Search class="h-4 w-4" aria-hidden="true" />
               <span class="sr-only">Search</span>
             </a>
             <a
@@ -135,7 +157,7 @@ const githubUrl = socialLinks[1].href;
               rel="noopener noreferrer"
               class="text-muted-foreground hover:text-foreground transition-colors duration-300"
             >
-              <Github class="h-4 w-4" />
+              <Github class="h-4 w-4" aria-hidden="true" />
               <span class="sr-only">GitHub</span>
             </a>
           </nav>

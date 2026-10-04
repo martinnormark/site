@@ -26,12 +26,15 @@ Personal blog site built with Astro (`output: "server"` on `@astrojs/cloudflare`
 - `src/pages/blog/[slug].astro` - Blog post from EmDash (`getEmDashEntry`, `<PortableText>` with `CodeBlock` override); empty 404 Response renders `404.astro`
 - `src/pages/blog/index.astro` - Blog listing from EmDash (`orderBy: { date: "desc" }`)
 - `src/components/CodeBlock.astro` - Portable Text `code` block override (no highlighting yet)
+- `src/components/Avatar.astro` - Author photo as `<picture>` (AVIF/WebP/JPEG variants in `public/`, made once from `avatar.jpeg`)
 - `src/live.config.ts` - EmDash live collection registration
 - `src/worker.ts` - Worker entry; wraps Astro handler with EmDash's scheduled handler
 - `astro.config.mjs` - Cloudflare adapter, EmDash (d1/r2), MDX with rehype-pretty-code (github-dark theme) and rehype-slug
 - `wrangler.jsonc` - Worker name, custom domain route, D1/R2 bindings, cron trigger. Adapter writes the final config to `dist/server/wrangler.json`
 
-**Styling**: Tailwind with @tailwindcss/typography for prose, shadcn/ui color system via CSS variables.
+**Styling**: Tailwind with @tailwindcss/typography for prose, shadcn/ui color system via CSS variables. All colours are tokens in `global.css`: dark by default, light palette under `prefers-color-scheme: light` — add new colours as tokens in both, and keep text at WCAG AA (4.5:1). Fonts are self-hosted in `public/fonts/` (cached via `public/_headers`); no third-party requests on public pages.
+
+**Page conventions**: semantic landmarks (`header`/`nav`/`main`/`footer`, one `h1` per page), decorative icons get `aria-hidden="true"`, images get `width`/`height`. The layout emits speculation rules (prerender on hover, `/_emdash/*` excluded) and `@view-transition` handles page cross-fades, so don't add a client-side router. Extra head tags (e.g. page JSON-LD) go in `<Fragment slot="head">`/`<script slot="head">`. `public/og.jpg` is the fallback social card unless a default OG image is set in admin → Settings → SEO.
 
 ## Previewing Changes
 

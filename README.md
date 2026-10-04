@@ -8,8 +8,9 @@ Live at **[www.martinnormark.com](https://www.martinnormark.com)**.
 
 - **[Astro 7](https://astro.build)** in `server` output mode on the `@astrojs/cloudflare` adapter; the home page is prerendered, blog pages render on demand from EmDash
 - **[EmDash CMS](https://docs.emdashcms.com)** for blog content — admin UI at `/_emdash/admin`, backed by Cloudflare D1 (content) and R2 (media)
-- **Tailwind CSS 4** (`@tailwindcss/vite`) + `@tailwindcss/typography`, plus a shadcn/ui-style color system via CSS variables
-- **React 19** for interactive islands, with shadcn/ui-style components
+- **Tailwind CSS 4** (`@tailwindcss/vite`) + `@tailwindcss/typography`, with a shadcn/ui-style color system via CSS variables (dark by default, light palette via `prefers-color-scheme`)
+- **React 19**, required by the EmDash admin; public pages ship no framework JavaScript (only `/search` loads a script)
+- Self-hosted fonts (Satoshi, Geist Mono) in `public/fonts/`, speculation rules for prerender-on-hover, and cross-document view transitions
 - **[rehype-pretty-code](https://rehype-pretty.pages.dev)** (github-dark theme) for syntax highlighting and **rehype-slug** for heading anchors
 - **Cloudflare Workers** for hosting, via Wrangler
 
@@ -44,9 +45,9 @@ All commands are run from the root of the project:
 
 ```text
 /
-├── public/                 # Static assets (avatar, favicon, etc.)
+├── public/                 # Static assets: fonts, avatar variants, og.jpg social card, _headers
 ├── src/
-│   ├── components/         # Astro + React components (incl. ui/ for shadcn-style)
+│   ├── components/         # Astro components (Avatar, CodeBlock)
 │   ├── content/
 │   │   └── blog/           # Legacy .mdx posts (migration source only)
 │   ├── content.config.ts   # Legacy blog collection schema (unused by pages)
@@ -60,7 +61,6 @@ All commands are run from the root of the project:
 │   │   └── blog/
 │   │       ├── index.astro  # Blog listing
 │   │       └── [slug].astro # Dynamic post rendering
-│   ├── lib/                 # Shared utilities
 │   └── styles/              # Global styles
 ├── scripts/mdx-to-seed.mjs  # Converts legacy MDX posts into seed/seed.json
 ├── seed/seed.json           # EmDash schema + migrated posts (bundled into the Worker)

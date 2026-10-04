@@ -1,9 +1,48 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 @config "../../tailwind.config.mjs";
 
+/* Self-hosted fonts: no third-party CSS on the critical path. Satoshi
+   (ITF Free Font License, fontshare.com) and Geist Mono (SIL OFL 1.1). */
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("/fonts/Satoshi-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/fonts/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cross-fade between pages without a client-side router. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+
 @layer base {
+  /* Dark is the default; the light palette below follows the OS setting. */
   :root {
+    color-scheme: dark;
     --background: 220 16% 6%;
     --foreground: 45 10% 88%;
     --card: 220 14% 9%;
@@ -15,7 +54,8 @@
     --secondary: 220 12% 14%;
     --secondary-foreground: 45 10% 75%;
     --muted: 220 12% 14%;
-    --muted-foreground: 220 8% 46%;
+    /* 55% lightness keeps small mono text above WCAG AA (4.5:1) */
+    --muted-foreground: 220 8% 55%;
     --accent: 38 92% 50%;
     --accent-foreground: 220 16% 6%;
     --destructive: 0 84.2% 60.2%;
@@ -24,6 +64,58 @@
     --input: 220 12% 16%;
     --ring: 38 92% 50%;
     --radius: 0.5rem;
+
+    --prose-body: 45 10% 75%;
+    --prose-headings: 45 10% 92%;
+    --prose-lead: 45 10% 68%;
+    --prose-link: 38 92% 55%;
+    --prose-bullets: 220 8% 30%;
+    --prose-code: 38 92% 65%;
+    --prose-pre-code: 45 10% 80%;
+    --prose-pre-bg: 220 14% 8%;
+    --prose-th-border: 220 12% 20%;
+    --selection-fg: 45 10% 95%;
+    --scrollbar-thumb: 220 12% 20%;
+    --scrollbar-thumb-hover: 220 12% 28%;
+    --grain-opacity: 0.025;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      color-scheme: light;
+      --background: 40 20% 97%;
+      --foreground: 220 16% 12%;
+      --card: 40 20% 99%;
+      --card-foreground: 220 16% 12%;
+      --popover: 40 20% 99%;
+      --popover-foreground: 220 16% 12%;
+      /* Darker amber: the dark-mode amber is ~2:1 on a light background */
+      --primary: 32 95% 32%;
+      --primary-foreground: 40 20% 98%;
+      --secondary: 40 12% 92%;
+      --secondary-foreground: 220 12% 25%;
+      --muted: 40 12% 92%;
+      --muted-foreground: 220 8% 40%;
+      --accent: 32 95% 32%;
+      --accent-foreground: 40 20% 98%;
+      --border: 40 10% 86%;
+      --input: 40 10% 86%;
+      --ring: 32 95% 32%;
+
+      --prose-body: 220 12% 22%;
+      --prose-headings: 220 16% 10%;
+      --prose-lead: 220 10% 30%;
+      --prose-link: 32 95% 30%;
+      --prose-bullets: 220 8% 65%;
+      --prose-code: 32 95% 28%;
+      --prose-pre-code: 220 16% 18%;
+      --prose-pre-bg: 40 12% 93%;
+      --prose-th-border: 40 10% 80%;
+      --selection-fg: 220 16% 8%;
+      --scrollbar-thumb: 40 8% 78%;
+      --scrollbar-thumb-hover: 40 8% 68%;
+      --grain-opacity: 0.035;
+    }
   }
 
   * {
@@ -41,8 +133,14 @@
   }
 
   ::selection {
-    background: hsl(38 92% 50% / 0.3);
-    color: hsl(45 10% 95%);
+    background: hsl(var(--primary) / 0.3);
+    color: hsl(var(--selection-fg));
+  }
+
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
@@ -53,7 +151,7 @@
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.025;
+  opacity: var(--grain-opacity);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
@@ -61,52 +159,32 @@
 
 /* Prose overrides for dark theme */
 .prose {
-  --tw-prose-body: hsl(45 10% 75%);
-  --tw-prose-headings: hsl(45 10% 92%);
-  --tw-prose-lead: hsl(45 10% 68%);
-  --tw-prose-links: hsl(38 92% 55%);
-  --tw-prose-bold: hsl(45 10% 92%);
-  --tw-prose-counters: hsl(220 8% 46%);
-  --tw-prose-bullets: hsl(220 8% 30%);
-  --tw-prose-hr: hsl(220 12% 16%);
-  --tw-prose-quotes: hsl(45 10% 75%);
-  --tw-prose-quote-borders: hsl(38 92% 50% / 0.4);
-  --tw-prose-captions: hsl(220 8% 46%);
-  --tw-prose-code: hsl(38 92% 65%);
-  --tw-prose-pre-code: hsl(45 10% 80%);
-  --tw-prose-pre-bg: hsl(220 14% 8%);
-  --tw-prose-th-borders: hsl(220 12% 20%);
-  --tw-prose-td-borders: hsl(220 12% 14%);
+  --tw-prose-body: hsl(var(--prose-body));
+  --tw-prose-headings: hsl(var(--prose-headings));
+  --tw-prose-lead: hsl(var(--prose-lead));
+  --tw-prose-links: hsl(var(--prose-link));
+  --tw-prose-bold: hsl(var(--prose-headings));
+  --tw-prose-counters: hsl(var(--muted-foreground));
+  --tw-prose-bullets: hsl(var(--prose-bullets));
+  --tw-prose-hr: hsl(var(--border));
+  --tw-prose-quotes: hsl(var(--prose-body));
+  --tw-prose-quote-borders: hsl(var(--primary) / 0.4);
+  --tw-prose-captions: hsl(var(--muted-foreground));
+  --tw-prose-code: hsl(var(--prose-code));
+  --tw-prose-pre-code: hsl(var(--prose-pre-code));
+  --tw-prose-pre-bg: hsl(var(--prose-pre-bg));
+  --tw-prose-th-borders: hsl(var(--prose-th-border));
+  --tw-prose-td-borders: hsl(var(--muted));
 }
 
 .prose a {
-  text-decoration-color: hsl(38 92% 50% / 0.4);
+  text-decoration-color: hsl(var(--primary) / 0.4);
   text-underline-offset: 3px;
   transition: text-decoration-color 0.2s ease;
 }
 
 .prose a:hover {
-  text-decoration-color: hsl(38 92% 50%);
-}
-
-/* Subtle link hover effect */
-a.link-hover {
-  position: relative;
-}
-
-a.link-hover::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: hsl(38 92% 50%);
-  transition: width 0.3s ease;
-}
-
-a.link-hover:hover::after {
-  width: 100%;
+  text-decoration-color: hsl(var(--primary));
 }
 
 /* Fade in animation */
@@ -133,22 +211,35 @@ a.link-hover:hover::after {
 .delay-4 { animation-delay: 0.4s; }
 .delay-5 { animation-delay: 0.5s; }
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
+  }
+
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(220 16% 6%);
+  background: hsl(var(--background));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(220 12% 20%);
+  background: hsl(var(--scrollbar-thumb));
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(220 12% 28%);
+  background: hsl(var(--scrollbar-thumb-hover));
 }
 
 /* EmDash LiveSearch (emdash/ui/search) theming */
