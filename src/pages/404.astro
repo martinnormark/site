@@ -3,15 +3,15 @@ import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="404 - Not Found" description="Page not found.">
-  <div class="flex flex-col items-center justify-center flex-grow px-6 py-24">
-    <p class="font-mono text-6xl font-bold text-primary/20 mb-4">404</p>
-    <p class="text-sm text-muted-foreground mb-2">Page not found.</p>
-    <pre class="font-mono text-xs text-muted-foreground/60 mb-8 bg-secondary/50 px-4 py-3 rounded-lg border border-border/30"><code set:html={`$ curl -s localhost:4321${Astro.url.pathname}\n{&quot;error&quot;: &quot;not_found&quot;, &quot;status&quot;: 404}`} /></pre>
+  <main class="flex flex-col items-center justify-center flex-grow px-6 py-24">
+    <p class="font-mono text-6xl font-bold text-primary/20 mb-4" aria-hidden="true">404</p>
+    <h1 class="text-sm text-muted-foreground mb-2">Page not found.</h1>
+    <pre class="font-mono text-xs text-muted-foreground mb-8 bg-secondary/50 px-4 py-3 rounded-lg border border-border/30"><code set:html={`$ curl -s localhost:4321${Astro.url.pathname}\n{&quot;error&quot;: &quot;not_found&quot;, &quot;status&quot;: 404}`} /></pre>
     <a
       href="/"
       class="text-xs font-mono text-primary hover:text-primary/80 transition-colors duration-300"
     >
       &larr; back home
     </a>
-  </div>
+  </main>
 </Layout>

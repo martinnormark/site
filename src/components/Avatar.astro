@@ -1,0 +1,31 @@
+---
+/**
+ * Author photo as a <picture>: the browser takes the first format it
+ * understands at the density it needs. Variants live in public/ and were
+ * made once from avatar.jpeg (sharp), at 64px and 128px.
+ */
+interface Props {
+  /** Rendered size in CSS pixels. 32 and 64 have 1x/2x variants. */
+  size: 32 | 64;
+  /** Empty when the name is already printed next to the photo. */
+  alt?: string;
+  class?: string;
+}
+
+const { size, alt = "", class: className } = Astro.props;
+const srcset = (ext: string) =>
+  size === 32 ? `/avatar-64.${ext} 2x` : `/avatar-64.${ext} 1x, /avatar-128.${ext} 2x`;
+---
+
+<picture>
+  <source type="image/avif" srcset={srcset("avif")} />
+  <source type="image/webp" srcset={srcset("webp")} />
+  <img
+    src={size === 32 ? "/avatar-64.jpg" : "/avatar-128.jpg"}
+    width={size}
+    height={size}
+    alt={alt}
+    decoding="async"
+    class={className}
+  />
+</picture>

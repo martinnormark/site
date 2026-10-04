@@ -5,6 +5,7 @@
  * Replaces EmDash's default Code component so code blocks use the site's
  * prose tokens (see --tw-prose-pre-* in global.css) instead of its own
  * hard-coded colours. No syntax highlighting yet — see README follow-ups.
+ * tabindex lets keyboard users scroll long lines (WCAG 2.1.1).
  */
 interface Props {
   node: {
@@ -24,7 +25,7 @@ const languageClass = node.language ? `language-${node.language}` : undefined;
   node?.code && (
     <figure class="code-block" data-language={node.language}>
       {node.filename && <figcaption>{node.filename}</figcaption>}
-      <pre class={languageClass}><code class={languageClass}>{node.code}</code></pre>
+      <pre class={languageClass} tabindex="0"><code class={languageClass}>{node.code}</code></pre>
     </figure>
   )
 }
